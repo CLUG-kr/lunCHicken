@@ -10,7 +10,10 @@ public class DataBase {
 
 	private String ip, port, id, pw;
 	public DataBase(String ip, String port, String id, String pw) throws SQLException {
-		
+		this.ip = id;
+		this.port = port;
+		this.id = id;
+		this.pw = pw;
 	}
 	
 	public Connection getConnection() throws SQLException {
