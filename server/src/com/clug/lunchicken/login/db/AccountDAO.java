@@ -41,7 +41,7 @@ public class AccountDAO {
 		Connection         conn  = null;
 		PreparedStatement  pstmt = null;
 		ResultSet          set   = null;
-		String             query = "select * from account where account_id = ? OR email = ?";
+		String             query = "select * from account where account_id = ? OR account_email = ?";
 		int 	           ret   = SUCCESS_DUPLICATION_CHECK;
 		try {
 			conn = db.getConnection();
@@ -64,6 +64,9 @@ public class AccountDAO {
 			
 
 		} catch (SQLException e) {
+			e.printStackTrace();
+			ret = ERR_UNKNOW;
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			ret = ERR_UNKNOW;
 		} 
@@ -97,6 +100,9 @@ public class AccountDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			ret = ERR_UNKNOW;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			ret = ERR_UNKNOW;
 		} 
 		try {
 			db.closeConnection(pstmt, conn);
@@ -117,13 +123,16 @@ public class AccountDAO {
 			conn = db.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, account.getId());
-			pstmt.setString(2, account.getEmail());
+			pstmt.setString(2, account.getPw());
 			set = pstmt.executeQuery();
 			if (!set.next()) {
 				ret = ERR_WRONG_INFORMATION;
 			}
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
+			ret = ERR_UNKNOW;
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			ret = ERR_UNKNOW;
 		} 

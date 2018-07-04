@@ -9,15 +9,21 @@ import java.sql.SQLException;
 public class DataBase {
 
 	private String ip, port, id, pw;
+	private AccountDAO account;
 	public DataBase(String ip, String port, String id, String pw) throws SQLException {
-		this.ip = id;
+		this.ip = ip;
 		this.port = port;
 		this.id = id;
 		this.pw = pw;
+		this.account = new AccountDAO(this);
 	}
 	
-	public Connection getConnection() throws SQLException {
-		Connection conn = DriverManager.getConnection(String.format("jdbc:mysql://%s:%s", ip, port), id, pw);
+	public Connection getConnection() throws SQLException, ClassNotFoundException {
+		Connection conn = null;
+		String url = "jdbc:mysql://" + ip + ":"+ port + "/lunchicken?autoReconnect=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC";
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		conn = DriverManager.getConnection(url, id, pw);
 		return conn;
 	}
 	
@@ -31,5 +37,8 @@ public class DataBase {
 		if (pstmt != null) pstmt.close();
 		if (conn != null)  conn.close();
 	}
-	
+
+	public AccountDAO getAccount() {
+		return account;
+	}
 }

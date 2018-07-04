@@ -40,6 +40,11 @@ public class Client implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	
+	public void send(String msg) {
+		writer.println(msg);
+		writer.flush();
+	}
 
 	@Override
 	public void run() {

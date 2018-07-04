@@ -24,7 +24,7 @@ public class LoginServer {
 		
 	public boolean initSever() {
 		try {
-			database = new DataBase("localhost", "3306", "root", "owl1203jmg");
+			database = new DataBase("localhost", "3306", "root", "root");
 			clientHandler = new ClientHandler(this);
 			serverSocket = new ServerSocket(getPort());
 			return true;
