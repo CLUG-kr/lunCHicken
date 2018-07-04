@@ -9,6 +9,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.clug.lunchicken.login.message.Message;
+import com.clug.lunchicken.login.message.MessageHandler;
+
 public class ClientHandler {
 
 	private LoginServer loginServer;

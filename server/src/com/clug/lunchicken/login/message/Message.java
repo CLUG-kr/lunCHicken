@@ -1,6 +1,8 @@
-package com.clug.lunchicken.login;
+package com.clug.lunchicken.login.message;
 
 import org.json.simple.JSONObject;
+
+import com.clug.lunchicken.login.LoginServer;
 
 public abstract class Message {
 	

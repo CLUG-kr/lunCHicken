@@ -1,6 +1,8 @@
-package com.clug.lunchicken.login;
+package com.clug.lunchicken.login.message;
 
 import java.util.HashMap;
+
+import com.clug.lunchicken.login.LoginServer;
 
 public class MessageHandler {
 
