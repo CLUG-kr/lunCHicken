@@ -14,7 +14,7 @@ public class TestLoginServer {
 		Socket socket;
 		try {
 			
-			socket = new Socket("localhost", 7777);
+			socket = new Socket("localhost", 7878);
 			PrintWriter writer = new PrintWriter(socket.getOutputStream());
 			/*writer.println("hi");
 			writer.flush();*/
