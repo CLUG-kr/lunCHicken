@@ -12,7 +12,7 @@ public interface IGameHandler {
 	public List<Game> getGameList();
 	
 	// in ready room
-	public void leaveGame(); // 게임 중일 때 동일
+	public void leaveGame(Player player); // 게임 중일 때 동일
 	public void startGame(); // 게임 시작
 	
 	// in Game

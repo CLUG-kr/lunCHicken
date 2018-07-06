@@ -52,6 +52,7 @@ public class GameHandler implements IGameHandler{
 		
 		game.addAllPlayer(player);
 		game.addLivingPlayer(player);
+		game.setCurrentPlayer(game.getCurrentPlayer()+1);
 		player.setJoinedGame(game);
 		player.setJoinedGameId(game.getGameId());
 		return JOIN_SUCCESS;
@@ -124,9 +125,27 @@ public class GameHandler implements IGameHandler{
 		return gameList;
 	}
 
+	
+	/**
+	 * 플레이어를 현재 포함되어 있는 게임에서 내보낸다.
+	 * 만약 나간 플레이어가 host 였으면 호스트가 없어진다.
+	 * @param player 게임에서 나갈 플레이어
+	 */
 	@Override
-	public void leaveGame() {
-		// TODO Auto-generated method stub
+	public void leaveGame(Player player) {
+		
+		// Game 에서 플레이어를 지워야 함
+		Game game = player.getJoinedGame();
+		if (game == null) return;
+		game.getAllPlayers().remove(player);
+		game.getLivingPlayers().remove(player);
+		game.getViewers().remove(player);
+		if (game.getHostPlayer().equals(player)) game.setHostPlayer(null);
+		game.setCurrentPlayer(game.getCurrentPlayer()-1);
+		
+		// Player 에서 Game 을 지워야함
+		player.setJoinedGame(null);
+		player.setJoinedGameId(-1);
 		
 	}
 
