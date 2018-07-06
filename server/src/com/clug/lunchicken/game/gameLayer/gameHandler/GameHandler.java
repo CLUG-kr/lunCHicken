@@ -12,10 +12,63 @@ public class GameHandler implements IGameHandler{
 		gameList = new LinkedList<>();
 	}
 
+	
+	
+	public static int JOIN_SUCCESS = 0;
+	public static int JOIN_FAIL_ALREADY_JOIN = 100;
+	public static int JOIN_FAIL_FULL = 101;
+	public static int JOIN_FAIL_NOT_READY = 102;
+	/**
+	 * 게임에 가입하는 메소드
+	 * 클라이언트 측에서는 방에 접근 하는 방법이 gameId 밖에 없다.
+	 * @param 
+	 * Player player - 가입하고자 하는 사람
+	 * int gameId - 가입하고자 하는 방의 아이디
+	 * @return
+	 * 성공 : 0<br>
+	 * 실패 : >0<br>
+	 * - 플레이어가 이미 다른 방에 들어가 있을 경우<br>
+	 * - 이미 방이 꽉차 있는 경우<br>
+	 * - 들어가고자 하는 방이 레디 상태가 아닐 경우<br>
+	 */
 	@Override
-	public void joinGame() {
-		// TODO Auto-generated method stub
+	public int joinGame(Player player, int gameId) {
 		
+		// 이미 플레이어가 다른 방에 존재하고 있을 경우
+		if (player.getJoinedGame() != null && player.getJoinedGameId() != -1) {
+			return JOIN_FAIL_ALREADY_JOIN;
+		}
+		
+		// 들어가고자 하는 방이 레디가 아닐 경우
+		Game game = findGameById(gameId);
+		if (game == null || game.getGameStatus() != GameStatus.GAME_READYROOM) {
+			return JOIN_FAIL_NOT_READY;
+		}
+		
+		// 이미 방이 꽉차 있는 경우
+		if (game.getCurrentPlayer() >= game.getMaxPlayer()) {
+			return JOIN_FAIL_FULL;
+		}
+		
+		game.addAllPlayer(player);
+		game.addLivingPlayer(player);
+		player.setJoinedGame(game);
+		player.setJoinedGameId(game.getGameId());
+		return JOIN_SUCCESS;
+	}
+	
+	/**
+	 * 게임 아이디로 게임을 찾아주는 메소드
+	 * @param gameId
+	 * @return 없을 경우 null
+	 */
+	private Game findGameById(int gameId) {
+		for (Game game : gameList) {
+			if (game.getGameId() == gameId) {
+				return game;
+			}
+		}
+		return null;
 	}
 	
 	/**

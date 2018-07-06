@@ -5,7 +5,7 @@ import com.clug.lunchicken.game.gameLayer.Player;
 public interface IGameHandler {
 
 	// in lobby
-	public void joinGame();
+	public int joinGame(Player player, int gameId);
 	public void createGame(Player player, Game rawGame);
 	public void showGameList();
 	

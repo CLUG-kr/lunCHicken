@@ -37,7 +37,7 @@ public class Game {
 	
 	public void createGame(String gameName, int maxPlayer, boolean useSafeZone, int safeZoneReduceTime) {
 		this.gameName = gameName;
-		this.maxPlayer = maxPlayer;
+		this.setMaxPlayer(maxPlayer);
 		this.useSafeZone = useSafeZone;
 		this.safeZoneReduceTime = safeZoneReduceTime;
 	}
@@ -59,6 +59,25 @@ public class Game {
 
 	public List<Player> getLivingPlayers() {return livingPlayers;}
 	public void setLivingPlayers(List<Player> livingPlayers) {this.livingPlayers = livingPlayers;}
-	public void addLivingPlayer(Player player) {this.livingPlayers.add(player);}
+	public void addLivingPlayer(Player player) {
+		this.livingPlayers.add(player);
+		this.currentPlayer += 1;
+	}
+
+	public int getMaxPlayer() {
+		return maxPlayer;
+	}
+
+	public void setMaxPlayer(int maxPlayer) {
+		this.maxPlayer = maxPlayer;
+	}
+
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(int currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
 	
 }
