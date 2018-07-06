@@ -1,5 +1,7 @@
 package com.clug.lunchicken.game.gameLayer.gameHandler;
 
+import java.util.List;
+
 import com.clug.lunchicken.game.gameLayer.Player;
 
 public interface IGameHandler {
@@ -7,7 +9,7 @@ public interface IGameHandler {
 	// in lobby
 	public int joinGame(Player player, int gameId);
 	public void createGame(Player player, Game rawGame);
-	public void showGameList();
+	public List<Game> getGameList();
 	
 	// in ready room
 	public void leaveGame(); // 게임 중일 때 동일

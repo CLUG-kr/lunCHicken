@@ -114,10 +114,14 @@ public class GameHandler implements IGameHandler{
 		return key;
 	}
 
+	/**
+	 * 지금 만들어져 있는 게임 리스트를 가지고 온다.
+	 * 추후에 필터 기능도 추가할 예정
+	 * @return 현재 모든 게임 리스트
+	 */
 	@Override
-	public void showGameList() {
-		// TODO Auto-generated method stub
-		
+	public List<Game> getGameList() {
+		return gameList;
 	}
 
 	@Override
