@@ -59,10 +59,7 @@ public class Game {
 
 	public List<Player> getLivingPlayers() {return livingPlayers;}
 	public void setLivingPlayers(List<Player> livingPlayers) {this.livingPlayers = livingPlayers;}
-	public void addLivingPlayer(Player player) {
-		this.livingPlayers.add(player);
-		this.currentPlayer += 1;
-	}
+	public void addLivingPlayer(Player player) {this.livingPlayers.add(player);}
 
 	public int getMaxPlayer() {
 		return maxPlayer;
