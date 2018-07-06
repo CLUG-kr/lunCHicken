@@ -1,5 +1,6 @@
 package com.clug.lunchicken.game.gameLayer.gameHandler;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import com.clug.lunchicken.game.gameLayer.Player;
@@ -7,6 +8,9 @@ import com.clug.lunchicken.game.gameLayer.Player;
 public class GameHandler implements IGameHandler{
 
 	private List<Game> gameList;
+	public GameHandler() {
+		gameList = new LinkedList<>();
+	}
 
 	@Override
 	public void joinGame() {
