@@ -8,19 +8,13 @@ import com.clug.lunchicken.game.gameLayer.Zone;
 public class Game {
 
 	private GameStatus gameStatus;
-	/**
-	 * 방에 들어와 있는 모든 인원들
-	 */
+	/** 방에 들어와 있는 모든 인원들 */
 	private List<Player> allPlayers;
-	/**
-	 * 죽거나 해서 게임을 플레이 할 수는 없지만 관전 중인 플레이어를 의미
-	 */
+	/** 죽거나 해서 게임을 플레이 할 수는 없지만 관전 중인 플레이어를 의미 */
 	private List<Player> viewers;
-	/**
-	 * 게임을 플레이 하는 사람.
-	 * 로비에서 대기 중인 사람도 포함된다
-	 */
+	/** 게임을 플레이 하는 사람. 로비에서 대기 중인 사람도 포함된다  */
 	private List<Player> livingPlayers;
+	/** 방장 */
 	private Player hostPlayer;
 	
 	// before game start
