@@ -8,8 +8,10 @@ import com.clug.lunchicken.game.gameLayer.Player;
 public class GameHandler implements IGameHandler{
 
 	private List<Game> gameList;
+	private List<GameThread> gameThreadList;
 	public GameHandler() {
 		gameList = new LinkedList<>();
+		gameThreadList = new LinkedList<>();
 	}
 
 	
@@ -149,10 +151,21 @@ public class GameHandler implements IGameHandler{
 		
 	}
 
+	/**
+	 * 게임을 시작하게 한다. 게임 스테이터스가 스타트로 변경
+	 * @param player 게임을 시작하자고 하는 플레이어
+	 */
 	@Override
-	public void startGame() {
-		// TODO Auto-generated method stub
-		
+	public void startGame(Player player) {
+		Game game = player.getJoinedGame();
+		game.setGameStatus(GameStatus.GAME_START);
+		GameThread gameThread = new GameThread(this, game);
+		gameThreadList.add(gameThread);
+		gameThread.startThread();
+	}
+	
+	public List<GameThread> getGameThreadList(){
+		return this.gameThreadList;
 	}
 	
 	

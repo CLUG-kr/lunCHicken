@@ -17,6 +17,10 @@ public class Player {
 	private int health;
 	private Location location;
 	
+	public void leaveGame() {
+		joinedGameId = -1;
+		joinedGame = null;
+	}
 	public void joinGame(Game game) {
 		setJoinedGame(game);
 		setJoinedGameId(game.getGameId());
