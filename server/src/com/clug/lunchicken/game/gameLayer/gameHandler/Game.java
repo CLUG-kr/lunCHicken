@@ -25,8 +25,10 @@ public class Game {
 	private int maxPlayer;
 	
 	// playing game
+	/** 전체 맵의 범위 */
 	private Zone playingZong;
 	private boolean useSafeZone;
+	/** 자기장이 몇 초마다 바뀔 것인지 의미*/
 	private int safeZoneReduceTime;
 	private CircleZone safeZone;
 	private CircleZone nextSafeZone;
