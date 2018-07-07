@@ -33,6 +33,8 @@ public class Game {
 	private int safeZoneReduceTime;
 	/** 자기장이 몇번 줄어들 것인지 */
 	private int safeZoneReduceLevel;
+	/** 지금은 몇번째 자기장인지 */
+	private int safeZoneCurrentLevel;
 	/** 현재 안전 구역 */
 	private CircleZone safeZone;
 	/** 다음 안전 구역 */
@@ -87,10 +89,11 @@ public class Game {
 	public void setSafeZoneReduceTime(int safeZoneReduceTime) {this.safeZoneReduceTime = safeZoneReduceTime;}
 	public int getSafeZoneReduceLevel() {return safeZoneReduceLevel;}
 	public void setSafeZoneReduceLevel(int safeZoneReduceLevel) {this.safeZoneReduceLevel = safeZoneReduceLevel;}
+	public int getSafeZoneCurrentLevel() {return safeZoneCurrentLevel;}
+	public void setSafeZoneCurrentLevel(int safeZoneCurrentLevel) {this.safeZoneCurrentLevel = safeZoneCurrentLevel;}
 	public CircleZone getSafeZone() {return safeZone;}
 	public void setSafeZone(CircleZone safeZone) {this.safeZone = safeZone;}
 	public CircleZone getNextSafeZone() {return nextSafeZone;}
 	public void setNextSafeZone(CircleZone nextSafeZone) {this.nextSafeZone = nextSafeZone;}
-	
 	
 }
