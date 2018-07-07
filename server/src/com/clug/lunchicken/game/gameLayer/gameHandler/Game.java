@@ -58,20 +58,10 @@ public class Game {
 	public void setLivingPlayers(List<Player> livingPlayers) {this.livingPlayers = livingPlayers;}
 	public void addLivingPlayer(Player player) {this.livingPlayers.add(player);}
 
-	public int getMaxPlayer() {
-		return maxPlayer;
-	}
+	public int getMaxPlayer() {return maxPlayer;}
+	public void setMaxPlayer(int maxPlayer) {this.maxPlayer = maxPlayer;}
 
-	public void setMaxPlayer(int maxPlayer) {
-		this.maxPlayer = maxPlayer;
-	}
-
-	public int getCurrentPlayer() {
-		return currentPlayer;
-	}
-
-	public void setCurrentPlayer(int currentPlayer) {
-		this.currentPlayer = currentPlayer;
-	}
+	public int getCurrentPlayer() {return currentPlayer;}
+	public void setCurrentPlayer(int currentPlayer) {this.currentPlayer = currentPlayer;}
 	
 }
