@@ -2,6 +2,7 @@ package com.clug.lunchicken.game.gameLayer.gameHandler;
 
 import java.util.List;
 
+import com.clug.lunchicken.game.gameLayer.CircleZone;
 import com.clug.lunchicken.game.gameLayer.Player;
 import com.clug.lunchicken.game.gameLayer.Zone;
 
@@ -24,12 +25,14 @@ public class Game {
 	private int maxPlayer;
 	
 	// playing game
+	private Zone playingZong;
 	private boolean useSafeZone;
 	private int safeZoneReduceTime;
-	private Zone safeZone;
-	private Zone nextSafeZone;
+	private CircleZone safeZone;
+	private CircleZone nextSafeZone;
 	
-	public void createGame(String gameName, int maxPlayer, boolean useSafeZone, int safeZoneReduceTime) {
+	public void createGame(String gameName, int maxPlayer, Zone playingZone, boolean useSafeZone, int safeZoneReduceTime) {
+		this.playingZong = playingZone;
 		this.gameName = gameName;
 		this.setMaxPlayer(maxPlayer);
 		this.useSafeZone = useSafeZone;
