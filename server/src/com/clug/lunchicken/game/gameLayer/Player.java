@@ -15,6 +15,7 @@ public class Player {
 	
 	// game
 	private int health;
+	private long healthLastUpdate = 0;
 	private Location location;
 	
 	public void leaveGame() {
@@ -37,5 +38,27 @@ public class Player {
 	public void setJoinedGame(Game joinedGame) {
 		this.joinedGame = joinedGame;
 	}
+	public int getHealth() {
+		return health;
+	}
+	public void setHealth(int health) {
+		this.health = health;
+	}
+	public void addHealth(int health) {
+		this.health += health;
+	}	
+	public long getHealthLastUpdate() {
+		return healthLastUpdate;
+	}
+	public void setHealthLastUpdate(long healthLastUpdate) {
+		this.healthLastUpdate = healthLastUpdate;
+	}
+	public Location getLocation() {
+		return location;
+	}
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 	
 }
