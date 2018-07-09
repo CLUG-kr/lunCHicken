@@ -25,12 +25,14 @@ public class Game {
 	private int maxPlayer;
 	
 	// playing game
-	/** 전체 맵의 범위 */
+	/** 전체 맵의 범위. 모든 시간은 밀리 초 단위다 */
 	private Zone playingZong;
 	/** 자기장을 사용할 것인지 여부를 의미*/
 	private boolean useSafeZone;
-	/** 자기장이 몇 초마다 바뀔 것인지 의미*/
+	/** 자기장이 몇 밀리초마다 바뀔 것인지 의미*/
 	private int safeZoneReduceTime;
+	/** 자기장이 줄어들기 남은 시간 */
+	private int safeZoneTime;
 	/** 자기장이 몇번 줄어들 것인지 */
 	private int safeZoneReduceLevel;
 	/** 지금은 몇번째 자기장인지 */
@@ -87,6 +89,9 @@ public class Game {
 	public void setUseSafeZone(boolean useSafeZone) {this.useSafeZone = useSafeZone;}
 	public int getSafeZoneReduceTime() {return safeZoneReduceTime;}
 	public void setSafeZoneReduceTime(int safeZoneReduceTime) {this.safeZoneReduceTime = safeZoneReduceTime;}
+	public int getSafeZoneTime() {return safeZoneTime;}
+	public void setSafeZoneTime(int safeZoneTime) {this.safeZoneTime = safeZoneTime;}
+	public void addSafeZoneTime(int safeZoneTime) {this.safeZoneTime += safeZoneTime;}
 	public int getSafeZoneReduceLevel() {return safeZoneReduceLevel;}
 	public void setSafeZoneReduceLevel(int safeZoneReduceLevel) {this.safeZoneReduceLevel = safeZoneReduceLevel;}
 	public int getSafeZoneCurrentLevel() {return safeZoneCurrentLevel;}
@@ -95,5 +100,5 @@ public class Game {
 	public void setSafeZone(CircleZone safeZone) {this.safeZone = safeZone;}
 	public CircleZone getNextSafeZone() {return nextSafeZone;}
 	public void setNextSafeZone(CircleZone nextSafeZone) {this.nextSafeZone = nextSafeZone;}
-	
+
 }
