@@ -52,5 +52,13 @@ public class Player {
 	public Location getLocation() {return location;}
 	public void setLocation(Location location) {this.location = location;}
 
+	public void sendSafeZoneReduceMsg() {
+		
+	}
+	
+	public void sendSafeZoneDamageMsg() {
+		
+	}
+	
 	
 }

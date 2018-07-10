@@ -56,6 +56,10 @@ public class GameThread implements Runnable{
 				
 				// 2. 자기장을 움직임
 				if (game.getSafeZoneTime() <= 0) {
+					// 자기장 줄어든다고 알림
+					for (Player player : game.getAllPlayers()) {
+						player.sendSafeZoneReduceMsg();
+					}
 					// 현재 자기장을 다음 자기장으로 옮기고
 					game.setSafeZone(game.getNextSafeZone());
 					// 다음 자기장 계산
@@ -68,11 +72,11 @@ public class GameThread implements Runnable{
 				currentTime = System.currentTimeMillis();
 				for (Player player : game.getLivingPlayers()) {
 					if (player.getLocation().getDistance(centerOfSafeZone) > radiusOfSafeZone) {
-						// TODO: notice
 						if (currentTime - player.getHealthLastUpdate() >= 1000) {
 							int damageOfSafeZone = game.getSafeZoneCurrentLevel();
 							player.addHealth(-damageOfSafeZone);
 							player.setHealthLastUpdate(currentTime);
+							player.sendSafeZoneDamageMsg();
 						}
 					}
 				}
