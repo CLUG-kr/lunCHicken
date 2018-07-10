@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.clug.lunchicken.game.gameLayer.gameHandler.GameHandler;
+
 public class GameServer {
 	
 	public GameServer(int port) {
@@ -16,11 +18,13 @@ public class GameServer {
 	
 	private ServerSocket serverSocket;
 	private ClientHandler clientHandler;
+	private GameHandler gameHandler; public GameHandler getGameHandler() { return this.gameHandler; }
 	
 	public void initServer() {
 		try {
 			serverSocket = new ServerSocket(getPort());
 			clientHandler = new ClientHandler(this);
+			gameHandler = new GameHandler(this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

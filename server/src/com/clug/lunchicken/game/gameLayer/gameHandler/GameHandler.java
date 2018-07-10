@@ -3,15 +3,18 @@ package com.clug.lunchicken.game.gameLayer.gameHandler;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.clug.lunchicken.game.GameServer;
 import com.clug.lunchicken.game.gameLayer.Player;
 
 public class GameHandler implements IGameHandler{
-
+	
+	private GameServer gameServer;
 	private List<Game> gameList;
 	private List<GameThread> gameThreadList;
-	public GameHandler() {
+	public GameHandler(GameServer gameServer) {
 		gameList = new LinkedList<>();
 		gameThreadList = new LinkedList<>();
+		this.gameServer = gameServer;
 	}
 
 	
