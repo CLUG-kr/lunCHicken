@@ -77,16 +77,26 @@ public class GameThread implements Runnable{
 							player.addHealth(-damageOfSafeZone);
 							player.setHealthLastUpdate(currentTime);
 							player.sendSafeZoneDamageMsg();
+							// 4. 플레이어들 체력 확인해서 죽었는지 결정
+							// 뷰어로 옮기고 플레이어에게 알림
+							if (player.getHealth() <= 0) {
+								game.getLivingPlayers().remove(player);
+								game.addViewer(player);
+								player.sendDieMsg();
+							}
 						}
 					}
 				}
 			}
 			
-			// 4. 플레이어들 체력 확인해서 죽었는지 결정
 			// 5. 게임 끝날 지 말지 결정
+			if (game.getLivingPlayers().size() <= 1) {
+				game.setGameStatus(GameStatus.GAME_FINISH);
+			}
 			// * 총 맞았는지 판별은 클라이언트에서 데이터가 와야지 진행하는 것이기 떄문에 진행하지 않음
-			
 		}
+		
+		// 게임 마무리 부분 - 아직 기획 X
 		
 		// Dead 상태가 됬으면
 		destroyGame();

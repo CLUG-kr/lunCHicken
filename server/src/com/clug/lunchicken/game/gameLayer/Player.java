@@ -60,5 +60,8 @@ public class Player {
 		
 	}
 	
+	public void sendDieMsg() {
+		
+	}
 	
 }
