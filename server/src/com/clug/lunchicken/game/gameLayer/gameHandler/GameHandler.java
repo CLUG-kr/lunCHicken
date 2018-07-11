@@ -1,8 +1,10 @@
 package com.clug.lunchicken.game.gameLayer.gameHandler;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.clug.lunchicken.game.Client;
 import com.clug.lunchicken.game.GameServer;
 import com.clug.lunchicken.game.gameLayer.Player;
 
@@ -16,10 +18,55 @@ public class GameHandler implements IGameHandler{
 	private GameServer gameServer;
 	private List<Game> gameList;
 	private List<GameThread> gameThreadList;
+	private HashMap<Client, Player> players;
+	
 	public GameHandler(GameServer gameServer) {
 		gameList = new LinkedList<>();
 		gameThreadList = new LinkedList<>();
+		players = new HashMap<>();
 		this.gameServer = gameServer;
+	}
+	
+	/**
+	 * 클라이언트 데이터를 통해 플레이어를 등록하는 메소드
+	 * 중복방지가 들어가 있다.
+	 * @param client
+	 * @param accountId
+	 */
+	@Override
+	public void registerPlayer(Client client, String accountId) {
+		if (players.containsKey(client)) {
+			return;
+		}
+		Player player = new Player(client, accountId);
+		players.put(client, player);
+	}
+	
+	/**
+	 * 클라이언트에 대응하는 플레이어를 가져오는 메소드
+	 * @param client 플레이어에 대응하는 클라이언트. 존재하지 않다면 null 을 반환한다.
+	 */
+	@Override
+	public Player getPlayer(Client client) {
+		return players.get(client);
+	}
+	
+	/**
+	 * 클라이언트에 대응하는 플레이어를 제거한다.
+	 * @param client
+	 */
+	@Override
+	public void unregisterPlayer(Client client) {
+		players.remove(client);
+	}
+	
+	/**
+	 * 플레이어를 제거한다.
+	 * @param player
+	 */
+	@Override
+	public void unregisterPlayer(Player player) {
+		unregisterPlayer(player.getClient());
 	}
 	
 	/**

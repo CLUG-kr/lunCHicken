@@ -2,10 +2,16 @@ package com.clug.lunchicken.game.gameLayer.gameHandler;
 
 import java.util.List;
 
+import com.clug.lunchicken.game.Client;
 import com.clug.lunchicken.game.gameLayer.Player;
 
 public interface IGameHandler {
 
+	public void registerPlayer(Client client, String accountId);
+	public Player getPlayer(Client client);
+	public void unregisterPlayer(Client client);
+	public void unregisterPlayer(Player player);
+	
 	// in lobby
 	public int joinGame(Player player, int gameId);
 	public void createGame(Player player, Game rawGame);
