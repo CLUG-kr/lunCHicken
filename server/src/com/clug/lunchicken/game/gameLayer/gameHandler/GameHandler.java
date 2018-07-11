@@ -8,6 +8,11 @@ import com.clug.lunchicken.game.gameLayer.Player;
 
 public class GameHandler implements IGameHandler{
 	
+	public static int JOIN_SUCCESS = 0;
+	public static int JOIN_FAIL_ALREADY_JOIN = 100;
+	public static int JOIN_FAIL_FULL = 101;
+	public static int JOIN_FAIL_NOT_READY = 102;
+	
 	private GameServer gameServer;
 	private List<Game> gameList;
 	private List<GameThread> gameThreadList;
@@ -16,13 +21,7 @@ public class GameHandler implements IGameHandler{
 		gameThreadList = new LinkedList<>();
 		this.gameServer = gameServer;
 	}
-
 	
-	
-	public static int JOIN_SUCCESS = 0;
-	public static int JOIN_FAIL_ALREADY_JOIN = 100;
-	public static int JOIN_FAIL_FULL = 101;
-	public static int JOIN_FAIL_NOT_READY = 102;
 	/**
 	 * 게임에 가입하는 메소드
 	 * 클라이언트 측에서는 방에 접근 하는 방법이 gameId 밖에 없다.
