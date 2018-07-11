@@ -19,7 +19,37 @@ public class MessageHandler {
 	}
 	
 	private void initMessageHandler() {
-	
+		/*
+		 * 1. MsgRegisterPlayer
+		 * - 가장 처음 플레이어를 등록
+		 * 2. MsgShowGameList
+		 * - 방 리스트를 보여줌
+		 * 3. MsgJoinGame
+		 * - 방에 들어감
+		 * - 방에 있는 다른 플레이어들에게 방 정보 전송
+		 * 4. MsgCreateGame
+		 * - 방을 만듦
+		 * 5. MsgLeaveGame
+		 * - 방에서 나감
+		 * - 방에 있는 다른 플레이어에게 방 정보 전송
+		 * 6. MsgStartGame
+		 * - 게임을 시작함
+		 * 7. MsgReadyRoomInfo
+		 * - 방 정보 전달 메세지 
+		 * - 서버에서 클라이언트로만
+		 * 
+		 * 1. MsgShoot
+		 * - 총을 쐈을 때
+		 * - 명중했는지 응답. 맞은 사람한테는 MsgHealthChange 보내기
+		 * 2. MsgPosition
+		 * - 클라이언트가 주기적으로 보내는 위치 데이터
+		 * - 응답 없음
+		 * 3. MsgHealthChange
+		 * - 자기장을 맞았거나 총을 맞았을 때
+		 * 4. MsgSafeZone
+		 * - 자기장에 대한 정보
+		 * 
+		 */
 	}
 	
 	public Message getMessageHandler(String action) {
