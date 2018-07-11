@@ -52,6 +52,7 @@ public class MessageHandler {
 		 */
 		messageMap.put("register_player", new MsgRegisterPlayer(gameServer));
 		messageMap.put("show_game_list", new MsgShowGameList(gameServer));
+		messageMap.put("join_game", new MsgJoinGame(gameServer));
 	}
 	
 	public Message getMessageHandler(String action) {
