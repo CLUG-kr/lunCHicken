@@ -51,6 +51,7 @@ public class MessageHandler {
 		 * - 자기장에 대한 정보
 		 */
 		messageMap.put("register_player", new MsgRegisterPlayer(gameServer));
+		messageMap.put("show_game_list", new MsgShowGameList(gameServer));
 	}
 	
 	public Message getMessageHandler(String action) {
