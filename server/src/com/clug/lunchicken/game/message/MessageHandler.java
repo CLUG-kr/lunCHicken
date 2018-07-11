@@ -54,6 +54,7 @@ public class MessageHandler {
 		messageMap.put("show_game_list", new MsgShowGameList(gameServer));
 		messageMap.put("join_game", new MsgJoinGame(gameServer));
 		messageMap.put("create_game", new MsgCreateGame(gameServer));
+		messageMap.put("leave_game", new MsgLeaveGame(gameServer));
 	}
 	
 	public Message getMessageHandler(String action) {
