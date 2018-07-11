@@ -48,8 +48,8 @@ public class MessageHandler {
 		 * - 자기장을 맞았거나 총을 맞았을 때
 		 * 4. MsgSafeZone
 		 * - 자기장에 대한 정보
-		 * 
 		 */
+		messageMap.put("register_player", new MsgRegisterPlayer(gameServer));
 	}
 	
 	public Message getMessageHandler(String action) {
