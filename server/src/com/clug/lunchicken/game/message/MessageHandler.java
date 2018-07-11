@@ -22,6 +22,7 @@ public class MessageHandler {
 		/*
 		 * 1. MsgRegisterPlayer
 		 * - 가장 처음 플레이어를 등록
+		 * - 성공 했는지 실패했는지 보냄
 		 * 2. MsgShowGameList
 		 * - 방 리스트를 보여줌
 		 * 3. MsgJoinGame
