@@ -41,14 +41,16 @@ public class ClientHandler {
 			if (message != null) { // action 이 정의도어 있는 액션인 경우
 				String dataStr = (String) jObj.get("data");
 				JSONObject data = (JSONObject) parser.parse(dataStr) ;
-				resStr = message.handleMessage(data);
+				resStr = message.handleMessage(client, data);
 			}
 			else { // 정의되지 않은 양식을 보냈다면
 				resStr = "err!";
 			}
 			System.out.println("fromClient: " + fromClient);
 			System.out.println("toClient: " + resStr);
-			client.send(resStr);
+			if (!resStr.equals(MessageHandler.NO_RESPONSE)) {
+				client.send(resStr);
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

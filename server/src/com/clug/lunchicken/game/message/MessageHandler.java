@@ -6,8 +6,12 @@ import com.clug.lunchicken.game.GameServer;
 
 
 public class MessageHandler {
+	
+	public final static String NO_RESPONSE = "no-response";
+	
 	private HashMap<String, Message> messageMap;
 	private GameServer gameServer;
+	
 	public MessageHandler(GameServer gameServer) {
 		this.gameServer = gameServer;
 		messageMap = new HashMap<>();
