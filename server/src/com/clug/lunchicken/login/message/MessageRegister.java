@@ -5,6 +5,25 @@ import org.json.simple.JSONObject;
 import com.clug.lunchicken.login.LoginServer;
 import com.clug.lunchicken.login.db.AccountBean;
 
+/**
+ * 회원가입시 주고 받는 메세지.
+ * 구글 로그인 인증 후 계정 명만 인증받는다.
+ * 주고 받는 데이터는 다음과 같다.<br>
+ * request: {
+ * 	"action":"register",
+ * 	"data":{
+ * 		"account_id":"(accountId)",
+ * 		"account_email":"(accountEmail)"
+ * 	}
+ * }<br>
+ * response:{
+ * 	"action":"register",
+ * 	"data":{
+ * 		"response":"(responseCode)"
+ * 	}
+ * @author JoMingyu
+ *
+ */
 public class MessageRegister extends Message{
 
 	public MessageRegister(LoginServer loginServer) {
@@ -23,10 +42,10 @@ public class MessageRegister extends Message{
 		
 		int result = loginServer.getDatabase().getAccount().register(account);
 		JSONObject resObj = new JSONObject();
+		JSONObject resData = new JSONObject();
 		resObj.put("action", "register");
-		JSONObject dataObj = new JSONObject();
-		dataObj.put("response", String.valueOf(result));
-		resObj.put("data", dataObj.toJSONString());
+		resData.put("response", String.valueOf(result));
+		resObj.put("data", resData.toJSONString());
 		return resObj.toJSONString();
 	}
 

@@ -11,7 +11,7 @@ import com.clug.lunchicken.login.db.AccountBean;
  * 	"action":"login",
  * 	"data":{
  * 		"account_email":"(accountEmail)"
- * 	}
+ * 	}<br>
  * response: {
  * 	"action":"login",
  * 	"data":{
