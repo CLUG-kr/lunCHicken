@@ -81,14 +81,13 @@ public class AccountDAO {
 	private int doRegister(AccountBean account) {
 		Connection         conn  = null;
 		PreparedStatement  pstmt = null;
-		String             query = "insert into `account` (`account_id`, `account_pw`, `account_email`) values(?, ?, ?)";
+		String             query = "insert into `account` (`account_id`, `account_email`) values(?, ?)";
 		int 	           ret   = SUCCESS_DUPLICATION_CHECK;
 		try {
 			conn = db.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, account.getId());
-			pstmt.setString(2, account.getPw());
-			pstmt.setString(3, account.getEmail());
+			pstmt.setString(2, account.getEmail());
 			ret = pstmt.executeUpdate();
 			if (ret != 0) {
 				ret = SUCCESS_REGISTER;								
@@ -117,13 +116,12 @@ public class AccountDAO {
 		Connection         conn  = null;
 		PreparedStatement  pstmt = null;
 		ResultSet          set   = null;
-		String             query = "select * from account where account_id = ? AND account_pw = ?";
+		String             query = "select * from account where account_email = ?";
 		int 	           ret   = SUCCESS_LOGIN;
 		try {
 			conn = db.getConnection();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, account.getId());
-			pstmt.setString(2, account.getPw());
+			pstmt.setString(1, account.getEmail());
 			set = pstmt.executeQuery();
 			if (!set.next()) {
 				ret = ERR_WRONG_INFORMATION;

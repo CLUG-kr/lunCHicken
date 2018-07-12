@@ -15,8 +15,6 @@ public class MessageLogin extends Message {
 	@Override
 	public String handleMessage(JSONObject data) {
 		AccountBean accountBean = new AccountBean();
-		accountBean.setId((String) data.get("account_id"));
-		accountBean.setPw((String) data.get("account_pw"));
 		accountBean.setEmail((String) data.get("account_email"));
 		
 		JSONObject response = new JSONObject();

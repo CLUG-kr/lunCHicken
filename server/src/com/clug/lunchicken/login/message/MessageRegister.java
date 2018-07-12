@@ -16,11 +16,9 @@ public class MessageRegister extends Message{
 	public String handleMessage(JSONObject data) {
 		
 		String id = (String) data.get("account_id");
-		String pw = (String) data.get("account_pw");
 		String email = (String) data.get("account_email");
 		AccountBean account = new AccountBean();
 		account.setId(id);
-		account.setPw(pw);
 		account.setEmail(email);
 		
 		int result = loginServer.getDatabase().getAccount().register(account);

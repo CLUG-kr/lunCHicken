@@ -3,7 +3,6 @@ package com.clug.lunchicken.login.db;
 public class AccountBean {
 
 	private String id;
-	private String pw;
 	private String email;
 	public String getId() {
 		return id;
@@ -17,11 +16,4 @@ public class AccountBean {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPw() {
-		return pw;
-	}
-	public void setPw(String pw) {
-		this.pw = pw;
-	}
-	
 }
