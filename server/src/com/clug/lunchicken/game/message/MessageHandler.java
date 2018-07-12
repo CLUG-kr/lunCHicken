@@ -39,6 +39,7 @@ public class MessageHandler {
 		 * 7. MsgReadyRoomInfo
 		 * - 방 정보 전달 메세지 
 		 * - 서버에서 클라이언트로만
+		 * - Player 의 sendReadyRoomInfo 메소드로!
 		 * 
 		 * 1. MsgShoot
 		 * - 총을 쐈을 때
