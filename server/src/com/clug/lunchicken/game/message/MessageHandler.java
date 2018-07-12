@@ -58,6 +58,7 @@ public class MessageHandler {
 		messageMap.put("create_game", new MsgCreateGame(gameServer));
 		messageMap.put("leave_game", new MsgLeaveGame(gameServer));
 		messageMap.put("start_game", new MsgStartGame(gameServer));
+		messageMap.put("player_shoot", new MsgShoot(gameServer));
 	}
 	
 	public Message getMessageHandler(String action) {
