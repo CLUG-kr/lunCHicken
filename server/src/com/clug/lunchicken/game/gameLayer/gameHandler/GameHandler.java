@@ -3,6 +3,7 @@ package com.clug.lunchicken.game.gameLayer.gameHandler;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 import com.clug.lunchicken.game.Client;
 import com.clug.lunchicken.game.GameServer;
@@ -215,6 +216,62 @@ public class GameHandler implements IGameHandler{
 	
 	public List<GameThread> getGameThreadList(){
 		return this.gameThreadList;
+	}
+
+	/**
+	 * shooter가 총을 쐈을 때 맞은 사람을 찾는 메소드
+	 * @param shooter 총을 쏜 플레이어
+	 * @param degree 복쪽 방향으로 부터의 각도. 
+	 */
+	private static final double ErrorFactor = 0.1;
+	@Override
+	public Player getHittedPlayer(Player shooter, double degree) {
+		// 좌표와 각도를 통해 맞았는지 안맞았는지를 확인
+		
+		// 방법 1. 일차 함수를 만들어서 해당 일차 함수에 포함 되는지 확인
+		// 단점: 사람의 몸은 점이 아니기도 하고, 오차율도 포함 해야하므로 
+		
+		// 방법2. 기울기만을 비교하여 처리
+		// 단점: 방법1 보다는 연산이 적지만 여전히 사람을 점 취급
+		
+		// 테스트 단계에서는 일단 방법2를 사용한다.
+		// 일단 맞은 사람을 모두 구한다.
+		Game game = shooter.getJoinedGame();
+		class ProcessUnit {
+			Player player;
+			double distance;
+			ProcessUnit(Player player, double distance){
+				this.player = player;
+				this.distance = distance;
+			}
+		}
+		Vector<ProcessUnit> hittedPlayers = new Vector<>();
+		double gradient = Math.pow(Math.tan(Math.toRadians(degree)), -1);
+		for (Player p : game.getLivingPlayers()) {
+			double newX = p.getLocation().getPosX() - shooter.getLocation().getPosX();
+			double newY = p.getLocation().getPosY() - shooter.getLocation().getPosY();
+			double degreeBetweenPlayerAndShooter = newY/newX;
+			if ((degree <= 180 & shooter.getLocation().getPosX() <= p.getLocation().getPosX() && shooter.getLocation().getPosY() <= p.getLocation().getPosY()) ||
+				(degree >= 180 & shooter.getLocation().getPosX() >= p.getLocation().getPosX() && shooter.getLocation().getPosY() >= p.getLocation().getPosY())	) {
+				if (gradient*(1-ErrorFactor) <= degreeBetweenPlayerAndShooter && degreeBetweenPlayerAndShooter <= gradient*(1+ErrorFactor)) {
+					hittedPlayers.add(new ProcessUnit(p, p.getLocation().getDistance(shooter.getLocation())));
+				}
+			}
+		}
+		
+		// 가장 가까운 사람을 맞힌다.
+		if (hittedPlayers.size() > 0) {
+			ProcessUnit closestPlayer = hittedPlayers.firstElement();
+			for (ProcessUnit pu : hittedPlayers) {
+				if (closestPlayer.distance > pu.distance) {
+					closestPlayer = pu;
+				}
+			}
+			return closestPlayer.player;
+		}
+		else {
+			return null;	
+		}
 	}
 	
 	

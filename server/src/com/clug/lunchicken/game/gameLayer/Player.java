@@ -72,4 +72,8 @@ public class Player {
 		
 	}
 	
+	public void sendHittedMsg() {
+		
+	}
+	
 }

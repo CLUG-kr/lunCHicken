@@ -22,6 +22,7 @@ public interface IGameHandler {
 	public void startGame(Player player); // 게임 시작
 	
 	// in Game
+	public Player getHittedPlayer(Player shooter, double degree);
 	/*public void playerMove();
 	public void playerShoot();
 	public void playerHitted();

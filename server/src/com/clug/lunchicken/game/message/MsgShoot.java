@@ -4,12 +4,14 @@ import org.json.simple.JSONObject;
 
 import com.clug.lunchicken.game.Client;
 import com.clug.lunchicken.game.GameServer;
+import com.clug.lunchicken.game.gameLayer.Player;
 
 /**
  * request:
  * {
  * 	"action":"player_shoot",
  * 	"data":{
+ * 		"body_part":"(body_part)",
  * 		"angle":"(angleOfGun)"
  * 	}
  * }<br>
@@ -29,10 +31,35 @@ public class MsgShoot extends Message{
 		super(gameServer);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public String handleMessage(Client client, JSONObject data) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		// parse body part
+		if (!data.containsKey("body_part")) return null;
+		String bodyPart = (String) data.get("body_part");
+		// parse angle of gun
+		if (!data.containsKey("angle")) return null;
+		double angle = Double.valueOf((String) data.get("angle"));
+		// get Player
+		Player shooter = gameServer.getGameHandler().getPlayer(client);
+		if (shooter == null) return null;
+		
+		int damage = 0;
+		Player hittedPlayer = gameServer.getGameHandler().getHittedPlayer(shooter, angle);
+		if (hittedPlayer != null) {
+			// 부위별 데미지 구현은 추후에 할 예정
+			damage = 30;
+		}
+		hittedPlayer.sendHittedMsg();
+		
+		JSONObject resObj = new JSONObject();
+		JSONObject resData = new JSONObject();
+		
+		resObj.put("action", "player_shoot");
+		resData.put("damage", String.valueOf(damage));
+		resObj.put("data", resData.toJSONString());
+		return resObj.toJSONString();
 	}
 
 }
