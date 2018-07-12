@@ -56,6 +56,10 @@ public class Player {
 		
 	}
 	
+	public void sendGameStartMsg() {
+		
+	}
+	
 	public void sendSafeZoneReduceMsg() {
 		
 	}

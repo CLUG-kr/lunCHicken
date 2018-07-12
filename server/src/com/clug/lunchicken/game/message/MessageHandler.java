@@ -35,6 +35,7 @@ public class MessageHandler {
 		 * - 방에 있는 다른 플레이어에게 방 정보 전송
 		 * 6. MsgStartGame
 		 * - 게임을 시작함
+		 * - 모든 플레이어에게 전달
 		 * 7. MsgReadyRoomInfo
 		 * - 방 정보 전달 메세지 
 		 * - 서버에서 클라이언트로만
@@ -55,6 +56,7 @@ public class MessageHandler {
 		messageMap.put("join_game", new MsgJoinGame(gameServer));
 		messageMap.put("create_game", new MsgCreateGame(gameServer));
 		messageMap.put("leave_game", new MsgLeaveGame(gameServer));
+		messageMap.put("start_game", new MsgStartGame(gameServer));
 	}
 	
 	public Message getMessageHandler(String action) {
