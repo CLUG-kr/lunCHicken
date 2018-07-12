@@ -49,8 +49,10 @@ public class MessageHandler {
 		 * - 응답 없음
 		 * 3. MsgHealthChange
 		 * - 자기장을 맞았거나 총을 맞았을 때
+		 * - 서버에서 클라이언트로 보내야함 sendHittedMsg, sendSafeZoneMamageMsg 로 구현
 		 * 4. MsgSafeZone
 		 * - 자기장에 대한 정보
+		 * - sendSafeZoneReduceMsg 를 통해 구현
 		 */
 		messageMap.put("register_player", new MsgRegisterPlayer(gameServer));
 		messageMap.put("show_game_list", new MsgShowGameList(gameServer));
