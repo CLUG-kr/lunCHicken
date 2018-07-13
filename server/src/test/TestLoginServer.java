@@ -14,14 +14,13 @@ public class TestLoginServer {
 		Socket socket;
 		try {
 			
-			socket = new Socket("localhost", 7878);
+			socket = new Socket("localhost", 7777);
 			PrintWriter writer = new PrintWriter(socket.getOutputStream());
 			/*writer.println("hi");
 			writer.flush();*/
 			
 			JSONObject test = new JSONObject();
 			test.put("account_id", "owlsogul");
-			test.put("account_pw", "1234");
 			test.put("account_email", "owlsogul@naver.com");
 			
 			JSONObject testObj = new JSONObject();
