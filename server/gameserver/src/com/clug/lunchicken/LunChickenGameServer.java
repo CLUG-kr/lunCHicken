@@ -1,8 +1,8 @@
 package com.clug.lunchicken;
 
-import com.clug.lunchicken.login.LoginServer;
+import com.clug.lunchicken.game.GameServer;
 
-public class LunChickenServer {
+public class LunChickenGameServer {
 
 	/**
 	 * Lunch + Chicken = LunChicken
@@ -17,15 +17,15 @@ public class LunChickenServer {
 	 * 1. 로그인 서버
 	 * 유저들이 처음 접하는 서버이며, 회원가입과 로그인 과정을 통해 서버에 접근하게 된다.
 	 * 게임 서버의 안정적인 유지를 위해 로그인 서버에 인증받지 못한 사용자들은 게임을 즐길 수 없도록 될 예정이다.
+	 * public static LoginServer loginServer;
 	 */
-	public static LoginServer loginServer;
 	
 	/**
 	 * 2. 게임 서버
 	 * 유저들이 게임을 위해 데이터를 주고 받는 서버이다.
 	 * 게임 참가부터 게임 승리까지 모든 데이터를 주고 받는다.
-	 * public static GameServer gameServer;
-	*/
+	 */
+	public static GameServer gameServer;
 	
 	public static void main(String[] args) {
 

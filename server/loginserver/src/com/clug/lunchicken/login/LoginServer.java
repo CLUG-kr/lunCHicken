@@ -48,14 +48,4 @@ public class LoginServer {
 		System.out.println("Exit");
 	}
 	
-	
-	
-	public static LoginServer loginServer;
-	public static void main(String args[]) {
-		loginServer = new LoginServer(7777);
-		loginServer.initSever();
-		loginServer.openServer();
-	}
-	
-	
 }
