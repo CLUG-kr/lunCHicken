@@ -51,7 +51,7 @@ public class ClientHandler {
 			System.out.println("toClient: " + resStr);
 			client.send(resStr);
 		} catch (ParseException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
