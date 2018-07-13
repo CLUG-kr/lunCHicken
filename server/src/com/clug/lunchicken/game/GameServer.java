@@ -45,7 +45,7 @@ public class GameServer {
 	public static GameServer server;
 	public static void main(String[] data) {
 		
-		server = new GameServer(7878);
+		server = new GameServer(7778);
 		server.initServer();
 		server.openServer();
 		
