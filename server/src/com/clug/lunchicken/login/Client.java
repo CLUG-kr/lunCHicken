@@ -20,7 +20,7 @@ public class Client implements Runnable{
 		this.clientSocket = clientSocket;
 		this.clientThraed = new Thread(this);
 		this.reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), "UTF-8"));
-		this.writer = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), "UTF_8"), true);
+		this.writer = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream(), "UTF-8"), true);
 		this.clientThraed.start();
 	}
 	
@@ -44,7 +44,6 @@ public class Client implements Runnable{
 	
 	public void send(String msg) {
 		writer.println(msg);
-		writer.flush();
 	}
 
 	@Override
