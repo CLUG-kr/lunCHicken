@@ -1,6 +1,5 @@
 package com.clug.lunchicken;
 
-import com.clug.lunchicken.game.GameServer;
 import com.clug.lunchicken.login.LoginServer;
 
 public class LunChickenServer {
@@ -25,8 +24,8 @@ public class LunChickenServer {
 	 * 2. 게임 서버
 	 * 유저들이 게임을 위해 데이터를 주고 받는 서버이다.
 	 * 게임 참가부터 게임 승리까지 모든 데이터를 주고 받는다.
-	 */
-	public static GameServer gameServer;
+	 * public static GameServer gameServer;
+	*/
 	
 	public static void main(String[] args) {
 
