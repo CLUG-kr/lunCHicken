@@ -51,7 +51,11 @@ public class MsgShoot extends Message{
 			// 부위별 데미지 구현은 추후에 할 예정
 			damage = 30;
 		}
-		hittedPlayer.sendHittedMsg();
+		hittedPlayer.addHealth(-damage);
+		hittedPlayer.sendHittedMsg(damage);
+		if (hittedPlayer.getHealth()<=0) {
+			hittedPlayer.sendDieMsg("killed-by-gun", shooter.getAccountId());
+		}
 		
 		JSONObject resObj = new JSONObject();
 		JSONObject resData = new JSONObject();

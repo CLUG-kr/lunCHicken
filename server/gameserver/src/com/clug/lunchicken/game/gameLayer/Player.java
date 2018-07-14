@@ -220,8 +220,25 @@ public class Player {
 		client.send(resObj.toJSONString());
 	}
 	
-	public void sendHittedMsg() {
-		
+	/**
+	 * 총에 의해 데미지를 입었을 경우 메세지를 보내는 메소드<br>
+	 * Message :{
+	 * 	"action":"game_shot_damage",
+	 * 	"data":{
+	 * 		"damage":"",
+	 * 		"health":""
+	 * 	}
+	 * }
+	 */
+	@SuppressWarnings("unchecked")
+	public void sendHittedMsg(int damage) {
+		JSONObject resObj = new JSONObject();
+		JSONObject resData = new JSONObject();
+		resObj.put("action", "game_shot_damage");
+		resData.put("damage", String.valueOf(damage));
+		resData.put("health", String.valueOf(this.getHealth()));
+		resObj.put("data", resData);
+		client.send(resObj.toJSONString());
 	}
 	
 }
