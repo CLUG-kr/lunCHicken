@@ -199,8 +199,25 @@ public class Player {
 		client.send(resObj.toJSONString());
 	}
 	
-	public void sendDieMsg() {
-		
+	/**
+	 * 죽었을 경우 메세지를 보내는 메소드<br>
+	 * Message :{
+	 * 	"action":"game_die",
+	 * 	"data":{
+	 * 		"reason:"",
+	 * 		"killer":""
+	 * 	}
+	 * }
+	 */
+	@SuppressWarnings("unchecked")
+	public void sendDieMsg(String reason, String killer) {
+		JSONObject resObj = new JSONObject();
+		JSONObject resData = new JSONObject();
+		resObj.put("action", "game_die");
+		resData.put("reason", reason);
+		resData.put("killer", killer);
+		resObj.put("data", resData);
+		client.send(resObj.toJSONString());
 	}
 	
 	public void sendHittedMsg() {

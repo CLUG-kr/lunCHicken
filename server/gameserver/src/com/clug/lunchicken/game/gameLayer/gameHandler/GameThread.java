@@ -82,7 +82,7 @@ public class GameThread implements Runnable{
 							if (player.getHealth() <= 0) {
 								game.getLivingPlayers().remove(player);
 								game.addViewer(player);
-								player.sendDieMsg();
+								player.sendDieMsg("safezone", "safezone");
 							}
 						}
 					}
