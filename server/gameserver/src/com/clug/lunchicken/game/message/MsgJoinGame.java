@@ -57,7 +57,7 @@ public class MsgJoinGame extends Message {
 			JSONObject resData = new JSONObject();
 			resObj.put("action", "join_game");
 			resData.put("result", String.valueOf(resultCode));
-			resObj.put("data", resData.toJSONString());
+			resObj.put("data", resData);
 			return resObj.toJSONString();
 		} catch (NumberFormatException e) {
 			return null;

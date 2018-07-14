@@ -38,7 +38,7 @@ public class MsgRegisterPlayer extends Message {
 		gameServer.getGameHandler().registerPlayer(client, accountId);
 		chk = true; 
 		resData.put("response", String.valueOf(chk));
-		resObj.put("data", resData.toJSONString());
+		resObj.put("data", resData);
 		return resObj.toJSONString();
 	}
 

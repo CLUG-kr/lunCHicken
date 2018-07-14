@@ -58,7 +58,7 @@ public class MsgShoot extends Message{
 		
 		resObj.put("action", "player_shoot");
 		resData.put("damage", String.valueOf(damage));
-		resObj.put("data", resData.toJSONString());
+		resObj.put("data", resData);
 		return resObj.toJSONString();
 	}
 
