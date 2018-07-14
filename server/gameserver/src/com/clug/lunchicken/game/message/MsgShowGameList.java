@@ -67,7 +67,7 @@ public class MsgShowGameList extends Message{
 		}
 		resData.put("game_list", gameArr);
 		resObj.put("data", resData);
-		return null;
+		return resObj.toJSONString();
 	}
 
 }
