@@ -101,8 +101,8 @@ public class Player {
 			playerObj.put("isHost", String.valueOf(game.getHostPlayer() == p));
 			playerArr.add(playerObj);
 		}
-		resData.put("players", playerArr.toJSONString());
-		resObj.put("data", resData.toJSONString());
+		resData.put("players", playerArr);
+		resObj.put("data", resData);
 		
 		// send
 		client.send(resObj.toJSONString());
