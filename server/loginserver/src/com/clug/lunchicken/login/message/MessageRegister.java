@@ -40,7 +40,22 @@ public class MessageRegister extends Message{
 	public MessageRegister(LoginServer loginServer) {
 		super(loginServer);
 	}
-
+	
+	/**
+	 * 회원가입 메세지를 처리하는 메소드
+	 * @param data JSONObject
+	 * @return
+	 * SUCCESS_TOKEN_PARSE(400) - 토큰 분석에 성공했을 경우<br>
+	 * ERR_NOT_VERIFIED(401) - 이메일 인증이 안되어있을 경우<br>
+	 * ERR_WRONG_TOKEN(402) - 잘 못 구성된 토큰일 경우<br>
+	 * 
+	 * ERR_UNKNOW(1) - 통신 과정 또는 알 수 없는 곳에서 오류가 발생 했을 경우<br>
+	 * 
+	 * ERR_WRONG_INFORMATION(301) - JSON 형식에 지켜지지 않았을 경우(id가 없거나 해서)<br>
+	 * ERR_DUPLICATED_ID(101) - 아이디 중복<br>
+	 * ERR_DUPLICATED_EMAIl(102) - 이메일 중복<br>
+	 * SUCCESS_REGISTER(200) - 회원가입 성공,
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public String handleMessage(JSONObject data) {
@@ -70,6 +85,17 @@ public class MessageRegister extends Message{
 		return resObj.toJSONString();
 	}
 	
+	/**
+	 * 이메일을 가져오는 메소드
+	 * @param accountBean
+	 * @param token
+	 * @return
+	 * SUCCESS_TOKEN_PARSE(400) - 토큰 분석에 성공했을 경우<br>
+	 * ERR_NOT_VERIFIED(401) - 이메일 인증이 안되어있을 경우<br>
+	 * ERR_WRONG_TOKEN(402) - 잘 못 구성된 토큰일 경우<br>
+	 * 
+	 * ERR_UNKNOW(1) - 통신 과정 또는 알 수 없는 곳에서 오류가 발생 했을 경우<br>
+	 */
 	private int getEmail(AccountBean accountBean, String token) {
 		try {
 			// get account data from google
@@ -108,7 +134,7 @@ public class MessageRegister extends Message{
 			return AccountDAO.ERR_UNKNOW;
 		} catch (ParseException e) {
 			e.printStackTrace();
-			return AccountDAO.ERR_WRONG_TOKEN;
+			return AccountDAO.ERR_WRONG_INFORMATION;
 		}
 	}
 }

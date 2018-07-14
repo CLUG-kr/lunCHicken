@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -40,6 +39,19 @@ public class MessageLogin extends Message {
 		super(loginServer);
 	}
 
+	/**
+	 * 로그인 메세지를 처리하는 메소드
+	 * @param data JSONObject
+	 * @return
+	 * SUCCESS_TOKEN_PARSE(400) - 토큰 분석에 성공했을 경우<br>
+	 * ERR_NOT_VERIFIED(401) - 이메일 인증이 안되어있을 경우<br>
+	 * ERR_WRONG_TOKEN(402) - 잘 못 구성된 토큰일 경우<br>
+	 * 
+	 * ERR_UNKNOW(1) - 통신 과정 또는 알 수 없는 곳에서 오류가 발생 했을 경우<br>
+	 * 
+	 * ERR_WRONG_INFORMATION(301) - 등록되지 않은 로그인 일 경우<br>
+	 * SUCCESS_LOGIN(300) - 로그인을 성공했을 경우<br>
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public String handleMessage(JSONObject data) {
@@ -64,6 +76,17 @@ public class MessageLogin extends Message {
 		return resObj.toJSONString();
 	}
 	
+	/**
+	 * 이메일을 가져오는 메소드
+	 * @param accountBean
+	 * @param token
+	 * @return
+	 * SUCCESS_TOKEN_PARSE(400) - 토큰 분석에 성공했을 경우<br>
+	 * ERR_NOT_VERIFIED(401) - 이메일 인증이 안되어있을 경우<br>
+	 * ERR_WRONG_TOKEN(402) - 잘 못 구성된 토큰일 경우<br>
+	 * 
+	 * ERR_UNKNOW(1) - 통신 과정 또는 알 수 없는 곳에서 오류가 발생 했을 경우<br>
+	 */
 	private int getEmail(AccountBean accountBean, String token) {
 		try {
 			// get account data from google
@@ -102,7 +125,7 @@ public class MessageLogin extends Message {
 			return AccountDAO.ERR_UNKNOW;
 		} catch (ParseException e) {
 			e.printStackTrace();
-			return AccountDAO.ERR_WRONG_TOKEN;
+			return AccountDAO.ERR_WRONG_INFORMATION;
 		}
 	}
 
