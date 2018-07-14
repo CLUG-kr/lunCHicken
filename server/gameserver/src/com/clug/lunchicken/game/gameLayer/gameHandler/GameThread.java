@@ -76,7 +76,7 @@ public class GameThread implements Runnable{
 							int damageOfSafeZone = game.getSafeZoneCurrentLevel();
 							player.addHealth(-damageOfSafeZone);
 							player.setHealthLastUpdate(currentTime);
-							player.sendSafeZoneDamageMsg();
+							player.sendSafeZoneDamageMsg(damageOfSafeZone);
 							// 4. 플레이어들 체력 확인해서 죽었는지 결정
 							// 뷰어로 옮기고 플레이어에게 알림
 							if (player.getHealth() <= 0) {

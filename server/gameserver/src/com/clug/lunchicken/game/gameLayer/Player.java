@@ -178,8 +178,25 @@ public class Player {
 		client.send(resObj.toJSONString());
 	}
 	
-	public void sendSafeZoneDamageMsg() {
-		
+	/**
+	 * SafeZone 에 데미지 입을 경우 메세지를 보내는 메소드<br>
+	 * Message :{
+	 * 	"action":"game_safe_zone_damage",
+	 * 	"data":{
+	 * 		"damage":"",
+	 * 		"health":""
+	 * 	}
+	 * }
+	 */
+	@SuppressWarnings("unchecked")
+	public void sendSafeZoneDamageMsg(int damage) {
+		JSONObject resObj = new JSONObject();
+		JSONObject resData = new JSONObject();
+		resObj.put("action", "game_safe_zone_damage");
+		resData.put("damage", String.valueOf(damage));
+		resData.put("health", String.valueOf(this.getHealth()));
+		resObj.put("data", resData);
+		client.send(resObj.toJSONString());
 	}
 	
 	public void sendDieMsg() {
