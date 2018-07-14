@@ -145,8 +145,37 @@ public class Player {
 		client.send(resObj.toJSONString());
 	}
 	
+	/**
+	 * 안전 구역이 줄어들었을 때 메세지를 보내는 메소드<br>
+	 * Message : {
+	 * 	"action":"game_safe_zone_reduce",
+	 * 	"data":{
+	 * 		"safe_zone":{
+	 * 			"center":{
+	 * 				"x":"",
+	 * 				"y":"",
+	 * 			},
+	 * 			"radius":""
+	 * 		}
+	 * 	}
+	 * }
+	 */
+	@SuppressWarnings("unchecked")
 	public void sendSafeZoneReduceMsg() {
-		
+		JSONObject resObj = new JSONObject();
+		JSONObject resData = new JSONObject();
+		resObj.put("action", "game_safe_zone_reduce");
+		JSONObject safeZoneObj = new JSONObject();
+		JSONObject centerObj = new JSONObject();
+		CircleZone safeZone = this.getJoinedGame().getSafeZone();
+		Location center = safeZone.getCenter();
+		centerObj.put("x", String.valueOf(center.getPosX()));
+		centerObj.put("y", String.valueOf(center.getPosY()));
+		safeZoneObj.put("cetner", centerObj);
+		safeZoneObj.put("radius", safeZone.getRadius());
+		resData.put("safe_zone", safeZoneObj);
+		resObj.put("data", resData);
+		client.send(resObj.toJSONString());
 	}
 	
 	public void sendSafeZoneDamageMsg() {
