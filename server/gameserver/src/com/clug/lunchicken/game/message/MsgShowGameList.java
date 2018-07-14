@@ -22,7 +22,13 @@ import com.clug.lunchicken.game.gameLayer.gameHandler.Game;
  * 			"game_id":"(game_id)",
  * 			"game_name":"(game_name)",
  * 			"game_current_player":"()",
- * 			"game_max_player":"()"
+ * 			"game_max_player":"()",
+ * 			"game_playing_zone":{
+ * 				"p1_x":"",
+ * 				"p1_y":"",
+ * 				"p2_x":"",
+ * 				"p2_y":""
+ * 			}
  * 		},
  * 		{
  * 			...
@@ -51,6 +57,12 @@ public class MsgShowGameList extends Message{
 			gameObj.put("game_name", game.getGameName());
 			gameObj.put("game_current_player", String.valueOf(game.getCurrentPlayer()));
 			gameObj.put("game_max_player", String.valueOf(game.getMaxPlayer()));
+			JSONObject playingZoneObj = new JSONObject();
+			playingZoneObj.put("p1_x", String.valueOf(game.getPlayingZong().getLocation1().getPosX()));
+			playingZoneObj.put("p1_y", String.valueOf(game.getPlayingZong().getLocation1().getPosY()));
+			playingZoneObj.put("p2_x", String.valueOf(game.getPlayingZong().getLocation2().getPosX()));
+			playingZoneObj.put("p2_y", String.valueOf(game.getPlayingZong().getLocation2().getPosY()));
+			gameObj.put("game_playing_zone", playingZoneObj);
 			gameArr.add(gameObj);
 		}
 		resData.put("game_list", gameArr.toJSONString());
