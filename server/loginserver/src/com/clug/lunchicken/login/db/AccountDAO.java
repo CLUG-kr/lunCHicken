@@ -131,7 +131,9 @@ public class AccountDAO {
 			if (!set.next()) {
 				ret = ERR_WRONG_INFORMATION;
 			}
-			account.setId(set.getString("account_id"));
+			else {
+				account.setId(set.getString("account_id"));
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
