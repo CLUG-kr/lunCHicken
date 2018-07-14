@@ -7,9 +7,12 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.logging.Logger;
 
 public class Client implements Runnable{
-
+	
+	private Logger logger = Logger.getLogger("LoginServer");
+	
 	private ClientHandler handler;
 	private Socket clientSocket;
 	private Thread clientThraed;
@@ -44,6 +47,7 @@ public class Client implements Runnable{
 	
 	public void send(String msg) {
 		writer.println(msg);
+		logger.info("to "+clientSocket.getInetAddress() + ","+msg);
 	}
 
 	@Override
@@ -51,7 +55,7 @@ public class Client implements Runnable{
 		while(true) {
 			try {
 				String fromClient = reader.readLine();
-				System.out.println("from Client:" + fromClient);
+				logger.info("from "+clientSocket.getInetAddress() + ","+fromClient);
 				handler.handleMessage(this, fromClient);
 			} catch (SocketException e) {
 				e.printStackTrace();

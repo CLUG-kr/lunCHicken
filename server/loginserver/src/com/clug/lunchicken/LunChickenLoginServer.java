@@ -1,9 +1,13 @@
 package com.clug.lunchicken;
 
+import java.util.logging.Logger;
+
 import com.clug.lunchicken.login.LoginServer;
 
 public class LunChickenLoginServer {
 
+	private static Logger logger = Logger.getLogger("LoginServer");
+	
 	/**
 	 * Lunch + Chicken = LunChicken
 	 * 런치킨 프로젝트는 현실에서 배틀로얄을 즐길 수 있게 해주는 프로젝트이다.
@@ -28,7 +32,8 @@ public class LunChickenLoginServer {
 	*/
 	
 	public static void main(String args[]) {
-		loginServer = new LoginServer(7777);
+		logger.info("Login Server Made By Jo Mingyu");
+		loginServer = new LoginServer(17777);
 		loginServer.initSever();
 		loginServer.openServer();
 	}
