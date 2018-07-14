@@ -17,7 +17,12 @@ public class AccountDAO {
 	SUCCESS_REGISTER = 200,
 	
 	SUCCESS_LOGIN = 300,
-	ERR_WRONG_INFORMATION = 301
+	ERR_WRONG_INFORMATION = 301,
+	
+	SUCCESS_TOKEN_PARSE = 400,
+	ERR_NOT_VERIFIED = 401,
+	ERR_WRONG_TOKEN = 402
+	
 	;
 	
 	public DataBase db;
@@ -126,6 +131,7 @@ public class AccountDAO {
 			if (!set.next()) {
 				ret = ERR_WRONG_INFORMATION;
 			}
+			account.setId(set.getString("account_id"));
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
