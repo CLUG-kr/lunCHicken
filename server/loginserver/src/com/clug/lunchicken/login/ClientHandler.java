@@ -46,8 +46,8 @@ public class ClientHandler {
 			else { // 정의되지 않은 양식을 보냈다면
 				resStr = "err!";
 			}
-			System.out.println("fromClient: " + fromClient);
-			System.out.println("toClient: " + resStr);
+			//System.out.println("fromClient: " + fromClient);
+			//System.out.println("toClient: " + resStr);
 			client.send(resStr);
 		} catch (ParseException e) {
 			//e.printStackTrace();
