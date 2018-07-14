@@ -108,8 +108,41 @@ public class Player {
 		client.send(resObj.toJSONString());
 	}
 	
+	/**
+	 * 게임이 시작되었을 때 메세지를 전송하는 메소드<br>
+	 * Message: {
+	 * 	"action":"game_start",
+	 * 	"data":{(sendReadyRoomMsg 와 같다.)}
+	 * }
+	 * @see sendReadyRoomMsg
+	 */
+	@SuppressWarnings("unchecked")
 	public void sendGameStartMsg() {
+		// 게임에 들어갔는지 여부 확인
+		// 멀티쓰레딩 과정에서 널 포인터 오류가 날 수 있기 때문에
+		if (this.getJoinedGame() == null) return;
+		Game game = this.getJoinedGame();
 		
+		// JSON parsing
+		JSONObject resObj = new JSONObject();
+		JSONObject resData = new JSONObject();
+		resObj.put("action", "game_start");
+		resData.put("game_id", game.getGameId());
+		resData.put("game_name", game.getGameName());
+		resData.put("current_player", String.valueOf(game.getCurrentPlayer()));
+		resData.put("max_player", String.valueOf(game.getMaxPlayer()));
+		JSONArray playerArr = new JSONArray();
+		for (Player p : game.getAllPlayers()) {
+			JSONObject playerObj = new JSONObject();
+			playerObj.put("accountId", p.getAccountId());
+			playerObj.put("isHost", String.valueOf(game.getHostPlayer() == p));
+			playerArr.add(playerObj);
+		}
+		resData.put("players", playerArr);
+		resObj.put("data", resData);
+		
+		// send
+		client.send(resObj.toJSONString());
 	}
 	
 	public void sendSafeZoneReduceMsg() {
