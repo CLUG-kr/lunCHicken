@@ -65,8 +65,8 @@ public class MsgShowGameList extends Message{
 			gameObj.put("game_playing_zone", playingZoneObj);
 			gameArr.add(gameObj);
 		}
-		resData.put("game_list", gameArr.toJSONString());
-		resObj.put("data", resData.toJSONString());
+		resData.put("game_list", gameArr);
+		resObj.put("data", resData);
 		return null;
 	}
 
