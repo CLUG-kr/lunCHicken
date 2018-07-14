@@ -23,9 +23,10 @@ public class EchoServer {
 	ServerSocket serverSocket;
 	public void startSever() {
 		try {
-			serverSocket = new ServerSocket(7777);
+			serverSocket = new ServerSocket(17777);
 			while(true) {
 				Socket socket = serverSocket.accept();
+				System.out.println(socket.getInetAddress());
 				EchoSocket echo = new EchoSocket(socket);
 				echo.start();
 			}
@@ -58,10 +59,7 @@ class EchoSocket implements Runnable{
 		while (true) {
 			try {
 				String fromClient = reader.readLine();
-				if (fromClient == null) {
-					continue;
-				}
-				System.out.println("from Client:" + fromClient);
+				if (fromClient != null) System.out.println("from Client:" + fromClient);
 				writer.println(fromClient);
 			} catch(SocketException e) {
 				e.printStackTrace();
