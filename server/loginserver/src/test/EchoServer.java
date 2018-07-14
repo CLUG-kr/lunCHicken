@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class EchoServer {
 
@@ -62,7 +63,10 @@ class EchoSocket implements Runnable{
 				}
 				System.out.println("from Client:" + fromClient);
 				writer.println(fromClient);
-			} catch (IOException e) {
+			} catch(SocketException e) {
+				e.printStackTrace();
+				break;
+			}catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
