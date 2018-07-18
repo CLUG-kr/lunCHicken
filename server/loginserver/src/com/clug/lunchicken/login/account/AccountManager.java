@@ -5,6 +5,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
 import javax.crypto.BadPaddingException;
@@ -18,18 +19,22 @@ import org.json.simple.parser.ParseException;
 import com.clug.lunchicken.login.Client;
 import com.clug.lunchicken.login.ClientHandler;
 import com.clug.lunchicken.login.LoginServer;
+import com.clug.lunchicken.login.account.IAccountManager;
 
-public class AccountManager implements IAccountManager{
+public class AccountManager implements IAccountManager, Runnable{
 
 	private HashMap<String, Account> tokenMap;
 	private LoginServer loginServer;
 	private ClientHandler clientHandler;
 	private Aes256Module encodeModule;
+	private Thread newTokenThread;
 	public AccountManager(LoginServer loginServer) {
 		this.loginServer = loginServer;
 		this.clientHandler = loginServer.getClientHandler();
 		this.tokenMap = new HashMap<>();
 		this.encodeModule = Aes256Module.getInstance();
+		this.newTokenThread = new Thread(this);
+		this.newTokenThread.start();
 	}
 	
 	
@@ -105,7 +110,7 @@ public class AccountManager implements IAccountManager{
 
 	@Override
 	public void addAccount(String key, String loginToken, Client client) {
-		Account account = new Account(loginToken, client);
+		Account account = new Account(loginToken, client, key);
 		tokenMap.put(key, account);
 	}
 	
@@ -119,6 +124,36 @@ public class AccountManager implements IAccountManager{
 	@Override
 	public void removeAccount(String key) {
 		tokenMap.remove(key);
+	}
+
+
+	@Override
+	public void run() {
+		while (true) {
+			long startT = System.currentTimeMillis();
+			Iterator<Account> iter = (Iterator<Account>) tokenMap.values();
+			while (iter.hasNext()) {
+				Account acc = iter.next();
+				acc.addIssuedTime(1);
+				if (acc.getIssuedTime() >= 30) {
+					if (acc.getClient().isConnect()) {
+						acc.setLoginToken(makeToken(acc.getAccountId()));
+						acc.getClient().sendNewToken(acc.getLoginToken());
+					}
+					else {
+						tokenMap.remove(acc.getAccountId());
+					}
+				}
+			}
+			long leadTime = System.currentTimeMillis() - startT;
+			try {
+				if (leadTime <= 60000) {
+					Thread.sleep(60000 - leadTime);	
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }

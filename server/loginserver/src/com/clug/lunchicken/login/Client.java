@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.logging.Logger;
 
+import org.json.simple.JSONObject;
+
 public class Client implements Runnable{
 	
 	private Logger logger = Logger.getLogger("LoginServer");
@@ -74,6 +76,16 @@ public class Client implements Runnable{
 	public boolean isConnect() {
 		if (clientSocket == null) return false;
 		return  clientSocket.isConnected() && ! clientSocket.isClosed();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void sendNewToken(String token) {
+		JSONObject resObj = new JSONObject();
+		JSONObject dataObj = new JSONObject();
+		resObj.put("action", "token_new");
+		dataObj.put("token", token);
+		resObj.put("data", dataObj);
+		send(resObj.toJSONString());
 	}
 	
 }
