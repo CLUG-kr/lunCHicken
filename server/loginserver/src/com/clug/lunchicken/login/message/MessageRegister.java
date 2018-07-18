@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.clug.lunchicken.login.Client;
 import com.clug.lunchicken.login.LoginServer;
 import com.clug.lunchicken.login.db.AccountBean;
 import com.clug.lunchicken.login.db.AccountDAO;
@@ -57,7 +58,7 @@ public class MessageRegister extends Message{
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public String handleMessage(JSONObject data) {
+	public String handleMessage(Client client, JSONObject data) {
 
 		JSONObject resObj = new JSONObject();
 		JSONObject resData = new JSONObject();

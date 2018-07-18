@@ -41,7 +41,7 @@ public class ClientHandler {
 			Message message = messageHandler.getMessageHandler(action);
 			if (message != null) { // action 이 정의도어 있는 액션인 경우
 				JSONObject data = (JSONObject) jObj.get("data");
-				resStr = message.handleMessage(data);
+				resStr = message.handleMessage(client, data);
 			}
 			else { // 정의되지 않은 양식을 보냈다면
 				resStr = "err!";

@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.clug.lunchicken.login.Client;
 import com.clug.lunchicken.login.LoginServer;
 import com.clug.lunchicken.login.db.AccountBean;
 import com.clug.lunchicken.login.db.AccountDAO;
@@ -21,12 +22,14 @@ import com.clug.lunchicken.login.db.AccountDAO;
  * request: {
  * 	"action":"login",
  * 	"data":{
- * 		"account_token":"(accountToken)"
+ * 		"account_google_token":"(accountToken)",
+ * 		"account_login_token":"(accountToken)"
  * 	}<br>
  * response: {
  * 	"action":"login",
  * 	"data":{
  * 		"account_id":"(accountId)"
+ * 		"account_login_token":"(accountToken)"
  * 		"response":"(responseCode)"
  * 	}
  * 
@@ -53,16 +56,16 @@ public class MessageLogin extends Message {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public String handleMessage(JSONObject data) {
+	public String handleMessage(Client client, JSONObject data) {
 
 		JSONObject resObj = new JSONObject();
 		JSONObject resData = new JSONObject();
 		resObj.put("action", "login");
 		
 		AccountBean accountBean = new AccountBean();
-		String account_token = (String) data.get("account_token");
-		int parseResult = getEmail(accountBean, account_token);
-		
+		String accountGoogleToken = (String) data.get("account_google_token");
+		int parseResult = getEmail(accountBean, accountGoogleToken);
+		String accountLoginToken = (String) data.get("account_login_token");
 		if (parseResult == AccountDAO.SUCCESS_TOKEN_PARSE) { // 올바른 토큰이었으면
 			// 로그인 서버에서 로그인을 함
 			parseResult = loginServer.getDatabase().getAccount().login(accountBean);
@@ -70,6 +73,12 @@ public class MessageLogin extends Message {
 				resData.put("account_id", accountBean.getId());
 			}
 		}
+		
+		accountLoginToken = loginServer.getAccountManager().registerAccount(accountBean.getId(), accountLoginToken, client);
+		if (accountLoginToken == null) {
+			
+		}
+		
 		resData.put("response", String.valueOf(parseResult));
 		resObj.put("data", resData);
 		return resObj.toJSONString();
