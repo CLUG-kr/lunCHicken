@@ -49,8 +49,11 @@ public class AccountManager implements IAccountManager, Runnable{
 				removeAccount(id);
 				return null;
 			}
-			else { // 재 로그인
-				newToken = makeToken(id);
+			else { // 재 로그인. 토큰이 멀쩡하면 그대로 사용
+				newToken = tokenMap.get(id).getLoginToken();
+				if (!validateToken(id, newToken)) {
+					newToken = makeToken(id);	
+				}
 				changeAccount(id, newToken, client);
 			}
 		}
@@ -131,9 +134,7 @@ public class AccountManager implements IAccountManager, Runnable{
 	public void run() {
 		while (true) {
 			long startT = System.currentTimeMillis();
-			Iterator<Account> iter = (Iterator<Account>) tokenMap.values();
-			while (iter.hasNext()) {
-				Account acc = iter.next();
+			for (Account acc : tokenMap.values()) {
 				acc.addIssuedTime(1);
 				if (acc.getIssuedTime() >= 30) {
 					if (acc.getClient().isConnect()) {
