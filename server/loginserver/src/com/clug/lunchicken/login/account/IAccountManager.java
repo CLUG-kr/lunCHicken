@@ -4,7 +4,7 @@ import com.clug.lunchicken.login.Client;
 
 public interface IAccountManager {
 	/**
-	 * 토큰 - 클라이언트의 맵이 필요하다.
+	 * 아이디 - (토큰 - 클라이언트)의 맵이 필요하다.
 	 * 암호키를 저장하고 있어야 합니다.
 	 */
 	

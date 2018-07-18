@@ -21,7 +21,7 @@ import com.clug.lunchicken.login.LoginServer;
 
 public class AccountManager implements IAccountManager{
 
-	private HashMap<String, Client> tokenMap;
+	private HashMap<String, Account> tokenMap;
 	private LoginServer loginServer;
 	private ClientHandler clientHandler;
 	private Aes256Module encodeModule;
@@ -36,27 +36,34 @@ public class AccountManager implements IAccountManager{
 	@Override
 	public String registerAccount(String id, String token, Client client) {
 		String newToken = token;
-		if (newToken == null) { // 토큰이 없다면
-			newToken = makeToken(id);
-			if (newToken == null) { // 혹시 토큰이 안만들어 졌을 경우를 대비한 조건문
-				System.out.println("ERR - 토큰이 만들어지지 않았습니다.");
+		if (tokenMap.containsKey(id)) {
+			if (tokenMap.get(id).getClient().isConnect()) { // 중복 로그인 시도
+				// 둘 다 연결을 끊어버림 -> 비번을 바꾸고 재로그인 시도
+				tokenMap.get(id).getClient().disconnect();
+				client.disconnect();
+				tokenMap.remove(id);
 				return null;
 			}
-		}
-		else { // 토큰이 있는데 만료되었을 경우 다시 토큰을 발급해줌
-			if (!validateToken(id, newToken)) {
+			else { // 재 로그인
 				newToken = makeToken(id);
-				removeToken(newToken);
+				Account account = tokenMap.get(id);
+				account.setClient(client);
+				account.setLoginToken(newToken);
 			}
 		}
-		
-		tokenMap.put(newToken, client);
+		else { // 중복되는 아이디가 없을 경우
+			// 바로 등록시켜줌
+			newToken = makeToken(id);
+			Account account = new Account(newToken, client);
+			tokenMap.put(id, account);
+		}
 		
 		return newToken;
 	}
 
 	@Override
 	public boolean validateToken(String id, String token) {
+		if(token == null) return false;
 		try {
 			String decodeToken = encodeModule.decodeAes(token);
 			JSONObject data = (JSONObject) new JSONParser().parse(decodeToken.split(":")[1]);
