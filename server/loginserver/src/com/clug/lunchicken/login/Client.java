@@ -63,9 +63,10 @@ public class Client implements Runnable{
 				e.printStackTrace();
 				break;
 			} catch (IOException e) {
-				e.printStackTrace();
+				if (e.getCause().toString().equals("Stream closed")) break;
 			} 
 		}
+		logger.info(clientSocket.getInetAddress() + "socket end");
 	}
 	
 	/**
