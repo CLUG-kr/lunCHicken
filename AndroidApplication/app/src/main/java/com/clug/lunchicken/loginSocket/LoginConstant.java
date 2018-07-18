@@ -12,6 +12,7 @@ public class LoginConstant {
 
     SUCCESS_LOGIN = 300,
             ERR_WRONG_INFORMATION = 301,
+            ERR_ALREADY_LOGIN = 302,
 
     SUCCESS_TOKEN_PARSE = 400,
             ERR_NOT_VERIFIED = 401,

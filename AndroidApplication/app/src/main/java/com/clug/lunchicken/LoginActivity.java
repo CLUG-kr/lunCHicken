@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.clug.lunchicken.data.LoginData;
 import com.clug.lunchicken.googleAuth.Auth;
 import com.clug.lunchicken.loginSocket.LoginConstant;
 import com.clug.lunchicken.loginSocket.LoginSocketHandler;
@@ -54,7 +55,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         msg = showToastHandler.obtainMessage();
                         msg.obj = "잘못된 정보입니다.";
                         break;
+                    case LoginConstant.ERR_ALREADY_LOGIN:
+                        msg = showToastHandler.obtainMessage();
+                        msg.obj = "이미 로그인 되어 있습니다.";
                     case LoginConstant.SUCCESS_LOGIN:
+
+                        LoginData.getInstance().setToken(data.getString("account_login_token"));
+                        Log.d(TAG, "My 토큰은 " + data.getString("account_login_token"));
+
                         msg = goToRobbyHandler.obtainMessage();
                         goToRobbyHandler.sendMessage(msg);
                         break;
