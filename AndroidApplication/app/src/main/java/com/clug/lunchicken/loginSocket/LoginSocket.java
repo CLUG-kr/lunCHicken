@@ -30,6 +30,7 @@ public class LoginSocket implements Runnable {
     }
 
     public void send(String msg){
+        
         if (socketOut == null) return;
         socketOut.println(msg);
     }

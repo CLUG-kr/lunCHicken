@@ -1,12 +1,17 @@
 package com.clug.lunchicken;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.clug.lunchicken.googleAuth.Auth;
+import com.clug.lunchicken.loginSocket.LoginConstant;
 import com.clug.lunchicken.loginSocket.LoginSocketHandler;
 import com.clug.lunchicken.loginSocket.LoginSocketListener;
 import com.clug.lunchicken.loginSocket.MessageHandler;
@@ -28,17 +33,54 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LoginSocketListener loginListener = new LoginSocketListener() {
         @Override
         public void onMessage(String action, JSONObject data) {
+            if (!data.has("response")) return;
             try {
-                Log.d(TAG, data.getString("response"));
                 int response = Integer.valueOf(data.getString("response"));
+                Message msg = null;
                 switch (response){
-                    case 200:
+                    case LoginConstant.ERR_WRONG_TOKEN:
+                        msg = showToastHandler.obtainMessage();
+                        msg.obj = "잘못된 토큰 오류. 관리자에게 문의하세요.";
+                        break;
+                    case LoginConstant.ERR_UNKNOW:
+                        msg = showToastHandler.obtainMessage();
+                        msg.obj = "알 수 없는 오류. 관리자에게 문의하세요.";
+                        break;
+                    case LoginConstant.ERR_NOT_VERIFIED:
+                        msg = showToastHandler.obtainMessage();
+                        msg.obj = "이메일 인증되지 않은 계정입니다.";
+                        break;
+                    case LoginConstant.ERR_WRONG_INFORMATION:
+                        msg = showToastHandler.obtainMessage();
+                        msg.obj = "잘못된 정보입니다.";
+                        break;
+                    case LoginConstant.SUCCESS_LOGIN:
+                        msg = goToRobbyHandler.obtainMessage();
+                        goToRobbyHandler.sendMessage(msg);
                         break;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             loginSocketHandler.unregisterListener(action, this);
+        }
+    };
+
+    private Handler showToastHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private Handler goToRobbyHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
+            Intent goToRobbyIntent = new Intent(LoginActivity.this, RobbyActivity.class);
+            startActivity(goToRobbyIntent);
         }
     };
 
