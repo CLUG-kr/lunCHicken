@@ -43,7 +43,6 @@ public class MessageLogin extends Message {
 	 * 로그인 메세지를 처리하는 메소드
 	 * @param data JSONObject
 	 * @return
-	 * SUCCESS_TOKEN_PARSE(400) - 토큰 분석에 성공했을 경우<br>
 	 * ERR_NOT_VERIFIED(401) - 이메일 인증이 안되어있을 경우<br>
 	 * ERR_WRONG_TOKEN(402) - 잘 못 구성된 토큰일 경우<br>
 	 * 
