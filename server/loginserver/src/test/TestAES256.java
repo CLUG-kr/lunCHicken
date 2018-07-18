@@ -14,6 +14,9 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
+import org.json.simple.JSONObject;
+
+import com.clug.lunchicken.login.account.Aes256Module;
  
 public class TestAES256 {
 	 
@@ -63,7 +66,30 @@ public class TestAES256 {
 	  return new String(c.doFinal(byteStr),"UTF-8");
 	 }
 	 
-	 public static void main(String[] data) {
+	 @SuppressWarnings("unchecked")
+		public static String makeToken(String id) {
+			JSONObject tokenObj = new JSONObject();
+			tokenObj.put("account_id", id);
+			tokenObj.put("created_time", String.valueOf(System.currentTimeMillis()));
+			String originStr = tokenObj.toJSONString();
+			
+			StringBuilder modulationStr = 
+				new StringBuilder()
+				.append(System.currentTimeMillis() / 100)
+				.append(":")
+				.append(originStr)
+				.append(":hello!my#friends!");
+			String tokenStr = null;
+			try {
+				tokenStr = Aes256Module.getInstance().encodeAes(modulationStr.toString());
+			} catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException
+					| InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
+				e.printStackTrace();
+			}
+			return tokenStr;
+		}
+	 
+	 public static void main(String[] data) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 		 TestAES256.getInstance();
 		 try {
 			String hi = AES_Encode("{data:data, data:data}{data:data, data:data}{data:data, data:data}{data:data, data:data}{data:data, data:data}{data:data, data:data}{data:data, data:data}{data:data, data:data}");
@@ -85,5 +111,9 @@ public class TestAES256 {
 		} catch (BadPaddingException e) {
 			e.printStackTrace();
 		}
+		 String enc = makeToken("owlsogul");
+		 String dec = AES_Decode(enc);
+		 System.out.println(enc);
+		 System.out.println(dec);
 	 }
 	}
