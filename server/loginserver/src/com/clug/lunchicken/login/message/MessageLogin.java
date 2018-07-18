@@ -70,13 +70,14 @@ public class MessageLogin extends Message {
 			// 로그인 서버에서 로그인을 함
 			parseResult = loginServer.getDatabase().getAccount().login(accountBean);
 			if (parseResult == AccountDAO.SUCCESS_LOGIN) { // 로그인을 성공하였으면
-				resData.put("account_id", accountBean.getId());
+				accountLoginToken = loginServer.getAccountManager().registerAccount(accountBean.getId(), accountLoginToken, client);
+				if (accountLoginToken == null) {
+					parseResult = AccountDAO.ERR_ALREADY_LOGIN;
+				}else {
+					resData.put("account_id", accountBean.getId());
+					resData.put("account_login_token", accountLoginToken);
+				}
 			}
-		}
-		
-		accountLoginToken = loginServer.getAccountManager().registerAccount(accountBean.getId(), accountLoginToken, client);
-		if (accountLoginToken == null) {
-			
 		}
 		
 		resData.put("response", String.valueOf(parseResult));
