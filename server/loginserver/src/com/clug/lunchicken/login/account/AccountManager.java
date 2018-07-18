@@ -41,7 +41,7 @@ public class AccountManager implements IAccountManager{
 				// 둘 다 연결을 끊어버림 -> 비번을 바꾸고 재로그인 시도
 				tokenMap.get(id).getClient().disconnect();
 				client.disconnect();
-				removeToken(id);
+				removeAccount(id);
 				return null;
 			}
 			else { // 재 로그인
