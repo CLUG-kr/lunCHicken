@@ -41,21 +41,18 @@ public class AccountManager implements IAccountManager{
 				// 둘 다 연결을 끊어버림 -> 비번을 바꾸고 재로그인 시도
 				tokenMap.get(id).getClient().disconnect();
 				client.disconnect();
-				tokenMap.remove(id);
+				removeToken(id);
 				return null;
 			}
 			else { // 재 로그인
 				newToken = makeToken(id);
-				Account account = tokenMap.get(id);
-				account.setClient(client);
-				account.setLoginToken(newToken);
+				changeAccount(id, newToken, client);
 			}
 		}
 		else { // 중복되는 아이디가 없을 경우
 			// 바로 등록시켜줌
 			newToken = makeToken(id);
-			Account account = new Account(newToken, client);
-			tokenMap.put(id, account);
+			addAccount(id, newToken, client);
 		}
 		
 		return newToken;
@@ -106,9 +103,21 @@ public class AccountManager implements IAccountManager{
 		return tokenStr;
 	}
 
+	@Override
+	public void addAccount(String key, String loginToken, Client client) {
+		Account account = new Account(loginToken, client);
+		tokenMap.put(key, account);
+	}
+	
+	@Override
+	public void changeAccount(String key, String loginToken, Client client) {
+		Account acc = tokenMap.get(key);
+		acc.setClient(client);
+		acc.setLoginToken(loginToken);
+	}
 
 	@Override
-	public void removeToken(String key) {
+	public void removeAccount(String key) {
 		tokenMap.remove(key);
 	}
 	

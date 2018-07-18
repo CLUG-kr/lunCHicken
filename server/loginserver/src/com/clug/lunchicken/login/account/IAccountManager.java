@@ -29,5 +29,7 @@ public interface IAccountManager {
 	 */
 	public String makeToken(String id);
 	
-	public void removeToken(String key);
+	public void removeAccount(String key);
+	public void changeAccount(String key, String loginToken, Client client);
+	public void addAccount(String key, String loginToken, Client client);
 }
