@@ -66,4 +66,14 @@ public class Client implements Runnable{
 		}
 	}
 	
+	/**
+	 * 소켓이 열려있는 지 확인하는 메소드
+	 * 참조 : http://cbts.tistory.com/124 
+	 * @return
+	 */
+	public boolean isConnect() {
+		if (clientSocket == null) return false;
+		return  clientSocket.isConnected() && ! clientSocket.isClosed();
+	}
+	
 }
