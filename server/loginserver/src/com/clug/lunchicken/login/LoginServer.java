@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
+import com.clug.lunchicken.login.account.AccountManager;
 import com.clug.lunchicken.login.db.DataBase;
 
 public class LoginServer {
@@ -13,6 +14,7 @@ public class LoginServer {
 	private Logger logger = Logger.getLogger("LoginServer");
 	private DataBase database; public DataBase getDatabase() {return database;}
 	private ClientHandler clientHandler; public ClientHandler getClientHandler() {return clientHandler;}
+	private AccountManager accountManager; public AccountManager getAccountManager() {return accountManager;}
 	
 	public LoginServer(int port) {
 		this.setPort(port);
@@ -30,6 +32,8 @@ public class LoginServer {
 			logger.info("init database");
 			clientHandler = new ClientHandler(this);
 			logger.info("init client handler");
+			accountManager = new AccountManager(this);
+			logger.info("init account manager");
 			serverSocket = new ServerSocket(getPort());
 			logger.info("init server socket");
 			return true;
