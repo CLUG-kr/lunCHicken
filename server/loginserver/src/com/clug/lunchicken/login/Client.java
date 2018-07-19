@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.logging.Logger;
 
+import org.json.simple.JSONObject;
+
 public class Client implements Runnable{
 	
 	private Logger logger = Logger.getLogger("LoginServer");
@@ -61,9 +63,30 @@ public class Client implements Runnable{
 				e.printStackTrace();
 				break;
 			} catch (IOException e) {
-				e.printStackTrace();
+				if (e.getCause().toString().equals("Stream closed")) break;
 			} 
 		}
+		logger.info(clientSocket.getInetAddress() + "socket end");
+	}
+	
+	/**
+	 * 소켓이 열려있는 지 확인하는 메소드
+	 * 참조 : http://cbts.tistory.com/124 
+	 * @return
+	 */
+	public boolean isConnect() {
+		if (clientSocket == null) return false;
+		return  clientSocket.isConnected() && ! clientSocket.isClosed();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void sendNewToken(String token) {
+		JSONObject resObj = new JSONObject();
+		JSONObject dataObj = new JSONObject();
+		resObj.put("action", "token_new");
+		dataObj.put("token", token);
+		resObj.put("data", dataObj);
+		send(resObj.toJSONString());
 	}
 	
 }

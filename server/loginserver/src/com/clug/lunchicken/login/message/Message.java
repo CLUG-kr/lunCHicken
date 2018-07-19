@@ -2,6 +2,7 @@ package com.clug.lunchicken.login.message;
 
 import org.json.simple.JSONObject;
 
+import com.clug.lunchicken.login.Client;
 import com.clug.lunchicken.login.LoginServer;
 
 public abstract class Message {
@@ -11,6 +12,6 @@ public abstract class Message {
 		this.loginServer = loginServer;
 	}
 	
-	public abstract String handleMessage(JSONObject data);
+	public abstract String handleMessage(Client client, JSONObject data);
 	
 }
