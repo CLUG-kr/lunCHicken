@@ -65,9 +65,9 @@ public class RegisterActivity extends AppCompatActivity {
                         showMsgHandler.sendMessage(msg);
                         break;
                     case LoginConstant.SUCCESS_REGISTER:
-                    msg = goToLoginHandler.obtainMessage();
-                    goToLoginHandler.sendMessage(msg);
-                    break;
+                        msg = goToLoginHandler.obtainMessage();
+                        goToLoginHandler.sendMessage(msg);
+                        break;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -87,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            showToast("회원가입 성공");
             finish();
         }
     };
