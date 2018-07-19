@@ -50,7 +50,7 @@ public class MessageHandler {
             sendLoginData = new JSONObject();
             tokenData = new JSONObject();
             sendLoginData.put("action", "login");
-            tokenData.put("account_token", idToken);
+            tokenData.put("account_google_token", idToken);
             sendLoginData.put("data", tokenData);
         } catch(JSONException e) {
             e.printStackTrace();

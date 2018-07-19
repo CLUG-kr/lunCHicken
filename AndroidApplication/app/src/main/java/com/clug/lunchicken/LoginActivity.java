@@ -1,12 +1,20 @@
 package com.clug.lunchicken;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.clug.lunchicken.data.LoginData;
 import com.clug.lunchicken.googleAuth.Auth;
+import com.clug.lunchicken.loginSocket.LoginConstant;
 import com.clug.lunchicken.loginSocket.LoginSocketHandler;
 import com.clug.lunchicken.loginSocket.LoginSocketListener;
 import com.clug.lunchicken.loginSocket.MessageHandler;
@@ -28,11 +36,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private LoginSocketListener loginListener = new LoginSocketListener() {
         @Override
         public void onMessage(String action, JSONObject data) {
+            //if (!data.has("response")) return;
+            Log.d(TAG, "Hi" + data.toString());
             try {
-                Log.d(TAG, data.getString("response"));
                 int response = Integer.valueOf(data.getString("response"));
+                Message msg = null;
                 switch (response){
-                    case 200:
+                    case LoginConstant.ERR_WRONG_TOKEN:
+                        msg = showToastHandler.obtainMessage();
+                        msg.obj = "잘못된 토큰 오류. 관리자에게 문의하세요.";
+                        showToastHandler.sendMessage(msg);
+                        break;
+                    case LoginConstant.ERR_UNKNOW:
+                        msg = showToastHandler.obtainMessage();
+                        msg.obj = "알 수 없는 오류. 관리자에게 문의하세요.";
+                        showToastHandler.sendMessage(msg);
+                        break;
+                    case LoginConstant.ERR_NOT_VERIFIED:
+                        msg = showToastHandler.obtainMessage();
+                        msg.obj = "이메일 인증되지 않은 계정입니다.";
+                        showToastHandler.sendMessage(msg);
+                        break;
+                    case LoginConstant.ERR_WRONG_INFORMATION:
+                        msg = showToastHandler.obtainMessage();
+                        msg.obj = "잘못된 정보입니다.";
+                        showToastHandler.sendMessage(msg);
+                        break;
+                    case LoginConstant.ERR_ALREADY_LOGIN:
+                        msg = showToastHandler.obtainMessage();
+                        msg.obj = "이미 로그인 되어 있습니다.";
+                        showToastHandler.sendMessage(msg);
+                    case LoginConstant.SUCCESS_LOGIN:
+
+                        LoginData.getInstance().setToken(data.getString("account_login_token"));
+                        Log.d(TAG, "My 토큰은 " + data.getString("account_login_token"));
+
+                        msg = goToRobbyHandler.obtainMessage();
+                        goToRobbyHandler.sendMessage(msg);
                         break;
                 }
             } catch (JSONException e) {
@@ -42,14 +82,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     };
 
+    private Context mContext;
+    private Handler showToastHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Log.d(TAG, msg.obj.toString());
+            Toast.makeText(mContext, msg.obj.toString(), Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private Handler goToRobbyHandler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
+            Intent goToRobbyIntent = new Intent(LoginActivity.this, RobbyActivity.class);
+            startActivity(goToRobbyIntent);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        mContext = getApplicationContext();
         loginSocketHandler.connectSocket();
         findViewById(R.id.register_button).setOnClickListener(this);
-
         // [START customize_button]
         // Set the dimensions of the sign-in button.
         findViewById(R.id.sign_in_login_button).setOnClickListener(this);

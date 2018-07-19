@@ -40,6 +40,28 @@ public class LoginSocketHandler {
     }
 
     private HashMap<String, LinkedList<LoginSocketListener>> listeners = new HashMap<>();
+    private LinkedList<LoginSocketOpenListener> openListeners = new LinkedList<>();
+    private LinkedList<LoginSocketCloseListener> closeListeners = new LinkedList<>();
+
+    public LinkedList<LoginSocketOpenListener> getOpenListeners() {
+        return openListeners;
+    }
+    public void registerOpenListener(LoginSocketOpenListener listener){
+        openListeners.add(listener);
+    }
+    public void unregisterOpenListener(LoginSocketOpenListener listener){
+        openListeners.remove(listener);
+    }
+    public LinkedList<LoginSocketCloseListener> getCloseListeners() {
+        return closeListeners;
+    }
+    public void registerCloseListener(LoginSocketCloseListener listener){
+        closeListeners.add(listener);
+    }
+    public void unregisterCloseListener(LoginSocketCloseListener listener){
+        closeListeners.remove(listener);
+    }
+
     public void registerListener(String action, LoginSocketListener listener){
         if (listeners.containsKey(action)){
             listeners.get(action).add(listener);
